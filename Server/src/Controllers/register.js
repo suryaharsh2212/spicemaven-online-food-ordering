@@ -8,10 +8,6 @@ export const registerUser = async (req, res) => {
   try {
     const { name, email, phoneNo,password } = req.body;
    
-    console.log(req.body);
-    
-    
-  
     
     
 
