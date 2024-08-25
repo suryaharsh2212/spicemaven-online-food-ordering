@@ -150,11 +150,11 @@ export default function Final_Navbar() {
 
               {/* Logo */}
               <div className="ml-4 flex lg:ml-0">
-                <Link >
+                <div >
 
                
                   <h1 className=' text-3xl text-amber-600 ' style={{ fontFamily: 'CustomFont' }} >Spice Heaven</h1>
-                </Link>
+                </div>
               </div>
 
               {/* Flyout menus */}
