@@ -1,6 +1,6 @@
 export const UseGetItem = async (type) => {
     try {
-      const response = await fetch('http://localhost:8000/restro/getmenu', {
+      const response = await fetch('https://spicemaven-online-food-ordering-backend.vercel.app/restro/getmenu', {
         method: 'POST',
         credentials: "include",
         headers: {

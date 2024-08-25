@@ -1,6 +1,6 @@
 export const UseOrderStatus = async (userID) => {
     try {
-      const response = await fetch('http://localhost:8000/restro/showorder', {
+      const response = await fetch('https://spicemaven-online-food-ordering-backend.vercel.app/restro/showorder', {
         method: 'POST',
         credentials: "include",
         headers: {

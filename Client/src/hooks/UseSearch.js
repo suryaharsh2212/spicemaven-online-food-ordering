@@ -1,6 +1,6 @@
 export const UseSearch = async (name) => {
     try {
-      const response = await fetch('http://localhost:8000/restro/search', {
+      const response = await fetch('https://spicemaven-online-food-ordering-backend.vercel.app/restro/search', {
         method: 'POST',
         credentials: "include",
         headers: {
