@@ -42,7 +42,7 @@ function AddressSuggestions() {
         };
 
         fetchAddressSuggestions();
-    }, [lat, long]); // Depend on lat and long to refetch on change
+    }, [lat, long]); 
 
     return (
         <div className="overflow-x-auto">
