@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap');
+.scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hidden {
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
+
+  @font-face {
+    font-family: 'CustomFont';
+    src: url('../src/fonts/fontprimary/EduVICWANTBeginner-VariableFont_wght.ttf') format('truetype');
+  }
+
+  @font-face {
+    font-family: 'Custombold';
+    src: url('../src//fonts/fontprimary/EduVICWANTBeginner-Bold.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'CustomMed';
+    src: url('../src/fonts/fontprimary/EduVICWANTBeginner-Medium.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'CustomRegular';
+    src: url('../src/fonts/fontprimary/EduVICWANTBeginner-Regular.ttf') format('truetype');
+  }
+  /* //phlospher  */
+
+  @font-face {
+    font-family: 'philoprimary';
+    src: url('../src/fonts/Philosopher-Regular.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'philosec';
+    src: url('../src/fonts/Philosopher-BoldItalic.ttf') format('truetype');
+  }
+  @font-face {
+    font-family: 'philobold';
+    src: url('../src/fonts/Philosopher-Bold.ttf') format('truetype');
+  }
+  
+  
+  /* Lodader css  */
+
+  
+  .loader {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
+    border: 3px solid;
+    border-color:#de3500 #0000 #fff #0000;
+    border-radius: 50%;
+    box-sizing: border-box;
+    animation: 1s rotate linear infinite;
+ }
+ .loader:before , .loader:after{
+    content: '';
+    top: 0;
+    left: 0;
+    position: absolute;
+    border: 10px solid transparent;
+    border-bottom-color:#fff;
+    transform: translate(-10px, 19px) rotate(-35deg);
+  }
+ .loader:after {
+    border-color: #de3500 #0000 #0000 #0000 ;
+    transform: translate(32px, 3px) rotate(-35deg);
+  }
+   @keyframes rotate {
+    100%{    transform: rotate(360deg)}
+  }
