@@ -81,11 +81,7 @@ function RegisterModal() {
                     <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
 
                         <section className="relative flex h-32 items-end  lg:col-span-5 lg:h-full xl:col-span-6">
-                            <img
-                                alt="err"
-                                src="https://img.freepik.com/free-vector/appointment-booking-with-smartphone_23-2148578379.jpg?uid=R81792226&ga=GA1.1.1500486508.1710956728&semt=ais_hybrid" 
-                                className="absolute inset-0 z-10 mt-10 md:mt-24 h-fit md:h-1/2 w-full "
-                            />
+                           
 
                             
                         </section>
@@ -99,7 +95,7 @@ function RegisterModal() {
                                
                                 <Alerterror isVisible={user.showError} message={user.errorMessage} />
 
-                                <form onSubmit={handlesubmit} id='form' className="mt-8 grid grid-cols-6 w-full md:w-96 gap-6">
+                                <form onSubmit={handlesubmit} id='form' className="mt-8 grid grid-cols-6 w-screen md:w-96 gap-6">
 
                                     <div className="col-span-6 ">
                                         <label htmlFor="FirstName" className="block text-sm font-medium text-gray-700">
