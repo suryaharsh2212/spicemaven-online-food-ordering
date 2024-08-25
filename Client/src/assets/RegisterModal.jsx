@@ -67,7 +67,7 @@ function RegisterModal() {
 
 
     return (
-        <div className='mb-20'>
+        <div className=''>
             <dialog id="my_modal_6" className="modal modal-middle mt-5 p-5 ">
 
 
