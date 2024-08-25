@@ -4,9 +4,9 @@ export const logoutUser = async (req, res) => {
   try {
     const user = req.user;
     user.token = null;
-    await user.save();
+    // await user.save();
 
-    res.cookie('token', '', { httpOnly: false, expires: new Date(0) });
+    // res.cookie('token', '', { httpOnly: false, expires: new Date(0) });
 
     res.status(200).json({
       message: 'User logged out successfully',
