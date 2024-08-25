@@ -12,7 +12,7 @@ ConnectToMongo()
 
 
 app.use(cors({ 
-    origin: ['http://localhost:5173','*'],
+    origin: 'https://spicemaven-online-food-ordering.vercel.app',
     credentials: true,
     withCredentials: true,
     
