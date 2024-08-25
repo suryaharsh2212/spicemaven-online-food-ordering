@@ -73,18 +73,18 @@ function RegisterModal() {
 
                 <section className="bg-white relative ">
                     <button
-                        className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                        className="btn z-50 btn-sm btn-circle btn-ghost absolute right-2 top-2"
                         onClick={() => document.getElementById('my_modal_6').close()}
                     >
                         ✕
                     </button>
                     <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
 
-                        <section className="relative flex h-32 items-end bg-gray-900 lg:col-span-5 lg:h-full xl:col-span-6">
+                        <section className="relative flex h-32 items-end  lg:col-span-5 lg:h-full xl:col-span-6">
                             <img
-                                alt=""
-                                src="https://images.pexels.com/photos/914388/pexels-photo-914388.jpeg?auto=compress&cs=tinysrgb&w=600"
-                                className="absolute inset-0 h-full w-full object-cover opacity-80"
+                                alt="err"
+                                src="https://img.freepik.com/free-psd/food-menu-restaurant-facebook-cover-template_106176-749.jpg?size=626&ext=jpg&ga=GA1.1.1500486508.1710956728&semt=ais_hybrid" 
+                                className="absolute inset-0 z-10 mt-10 h-full w-full object-cover opacity-80"
                             />
 
                             <div className="hidden lg:relative lg:block lg:p-12">
@@ -128,18 +128,17 @@ function RegisterModal() {
                                        
                                     </a>
 
-                                    <h1 className="mt-2 text-2xl font-bold text-orange-500 sm:text-3xl md:text-4xl">
-                                        Welcome to <span className='font-semibold font-sans-serif'>SPICE HAVEN</span>  🦑
+                                    <h1 style={{fontFamily:'philoprimary'}} className="mt-2 text-2xl font-bold text-orange-500 sm:text-3xl md:text-4xl">
+                                       Welcome To Spice Haven  
                                     </h1>
 
                                     <p className="mt-4 leading-relaxed text-gray-500">
-                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eligendi nam dolorum aliquam,
-                                        quibusdam aperiam voluptatum.
+                                       
                                     </p>
                                 </div>
                                 <Alerterror isVisible={user.showError} message={user.errorMessage} />
 
-                                <form onSubmit={handlesubmit} id='form' className="mt-8 grid grid-cols-6 w-96 gap-6">
+                                <form onSubmit={handlesubmit} id='form' className="mt-8 grid grid-cols-6 w-full gap-6">
 
                                     <div className="col-span-6 ">
                                         <label htmlFor="FirstName" className="block text-sm font-medium text-gray-700">
