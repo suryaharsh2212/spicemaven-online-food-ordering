@@ -53,13 +53,11 @@ function LoginModal() {
 
           <div className="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
             <div className="mx-auto max-w-lg w-80">
-              <h1 className="text-center text-2xl font-bold text-orange-600 sm:text-3xl">
-                Get started today
-              </h1>
+              <img src="https://img.freepik.com/free-vector/sign-page-abstract-concept-illustration_335657-3875.jpg?size=626&ext=jpg&uid=R81792226&ga=GA1.1.1500486508.1710956728&semt=ais_hybrid" alt="" />
 
               <Alerterror isVisible={user.showError} message={user.errorMessage} />
 
-              <form onSubmit={handleSubmit} className="mb-0 mt-6 space-y-4 rounded-lg p-4 sm:p-6 lg:p-8">
+              <form onSubmit={handleSubmit} className="mb-0 h-fit space-y-4 md:-mt-10 -mt-3 rounded-lg p-4 sm:p-6 lg:p-8">
                 <p className="text-center text-lg font-medium">Sign in to your account</p>
 
                 <div>
@@ -72,22 +70,8 @@ function LoginModal() {
                       className="w-full rounded-lg p-4 pe-12 text-sm bg-slate-100"
                       placeholder="Enter email or Phone no"
                     />
-                    <span className="absolute inset-y-0 end-0 grid place-content-center px-4">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="size-4 text-gray-400"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207"
-                        />
-                      </svg>
-                    </span>
+                   
+                  
                   </div>
                 </div>
 
