@@ -11,13 +11,13 @@ function Map() {
       apiKey: 'RXOAN8qwwE5Ze8YTC6xUN9oM5xg90wvETPTct8Gb',
     });
 
-    // Use the Geolocation API to get the user's current position
+    
     navigator.geolocation.getCurrentPosition((position) => {
       const { latitude, longitude } = position.coords;
       setLat(latitude)
       setLong(longitude)
    
-      // Initialize the map centered at the user's location
+    
       const myMap = olaMaps.init({
         style: 'https://api.olamaps.io/tiles/vector/v1/styles/default-light-standard/style.json', 
         container: 'map', 

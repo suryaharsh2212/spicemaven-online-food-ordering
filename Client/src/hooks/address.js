@@ -27,20 +27,20 @@ fetch(url, {
     method: 'GET',
     headers: {
         'X-Request-Id': requestId,
-        'Accept': 'application/json' // Optional, specify expected response type
+        'Accept': 'application/json' 
     }
 })
 .then(response => {
     if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
     }
-    return response.json(); // Parse JSON response
+    return response.json(); 
 })
 .then(data => {
-    console.log('Response data:', data.results); // Handle the response data
+    console.log('Response data:', data.results); 
 })
 .catch(error => {
-    console.error('Fetch error:', error); // Handle errors
+    console.error('Fetch error:', error); 
 });
 
   

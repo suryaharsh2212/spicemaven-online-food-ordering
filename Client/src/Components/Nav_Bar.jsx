@@ -152,12 +152,7 @@ export default function Final_Navbar() {
               <div className="ml-4 flex lg:ml-0">
                 <Link >
 
-                  {/* <img
-                    alt=""
-                    // src="https://cdn-icons-png.flaticon.com/128/17592/17592471.png" 
-                    src='https://cdn-icons-png.flaticon.com/128/7409/7409374.png'
-                    className="h-10 w-auto"
-                  /> */}
+               
                   <h1 className=' text-3xl text-amber-600 ' style={{ fontFamily: 'CustomFont' }} >Spice Heaven</h1>
                 </Link>
               </div>
