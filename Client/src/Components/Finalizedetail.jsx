@@ -198,7 +198,7 @@ const navigate=useNavigate();
                                         onClick={GenerateOrder}
                                         className="inline-block w-full rounded-lg bg-orange-500  px-5 py-3 font-medium text-white sm:w-auto"
                                     >
-                                        Confirm&pay
+                                        PlaceOrder
                                     </button>
                                 </div>
                             </div>
