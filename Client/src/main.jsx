@@ -9,7 +9,7 @@ import Menu from './Components/Menu.jsx';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux/store.js';
-import Profile from './Components/Profile.jsx';
+// import Profile from './Components/Profile.jsx'; 
 import Cart from './Components/Cart.jsx';
 
 import Finalizedetail from './Components/Finalizedetail.jsx';
