@@ -159,7 +159,10 @@ function RegisterModal() {
                                         <button type='submit'
                                             className="inline-block shrink-0 rounded-md border border-orange-600 bg-orange-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-orange-600 focus:outline-none focus:ring active:text-orange-500"
                                         >
-                                            Create an account
+                                             {user.loadingstate
+                    ? <div className='flex justify-center'><img className="w-7 h-7 animate-spin " src="https://www.svgrepo.com/show/70469/loading.svg" alt="Loading icon" /></div>
+                    : <>Signup</>
+                  }
                                         </button>
 
                                         <p className="mt-4 text-sm text-gray-500 sm:mt-0">

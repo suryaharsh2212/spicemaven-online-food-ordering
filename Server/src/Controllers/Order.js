@@ -1,22 +1,9 @@
 import { Order } from '../Database/Model/OrderModel.js';
 import { OrderDetail } from '../Database/Model/Orderdetail.js';
-import { Dish } from '../Database/Model/DishModel.js';
 
 
-// {
-//     "userID": "60c72b2f9b1d4f1a4c8b4567",
-//     "orderDetails": [
-//       {
-//         "dishId": "60c72b2f9b1d4f1a4c8b4568",
-//         "quantity": 2
-//       },
-//       {
-//         "dishId": "60c72b2f9b1d4f1a4c8b4569",
-//         "quantity": 1
-//       }
-//     ]
-//   }
-  
+
+
 
 
 export const createOrder = async (req, res) => {
@@ -50,3 +37,19 @@ export const createOrder = async (req, res) => {
     return res.status(500).json({ message: 'Server error' });
   }
 };
+
+
+// {
+//     "userID": "60c72b2f9b1d4f1a4c8b4567",
+//     "orderDetails": [
+//       {
+//         "dishId": "60c72b2f9b1d4f1a4c8b4568",
+//         "quantity": 2
+//       },
+//       {
+//         "dishId": "60c72b2f9b1d4f1a4c8b4569",
+//         "quantity": 1
+//       }
+//     ]
+//   }
+  

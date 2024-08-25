@@ -15,10 +15,10 @@ const router=Router();
 
 router.route("/register").post(registerUser)
 router.route("/login").post(loginUser)
-router.route("/logout").post(logoutUser)
-router.route("/order").post(createOrder)
-router.route("/showorder").post(getOrdersByUser)
-router.route("/getmenu").post(getItems)
-router.route("/search").post(getItemsBysearch)
+router.route("/logout").post(authenticateUser,logoutUser)
+router.route("/order").post(authenticateUser,createOrder)
+router.route("/showorder").post(authenticateUser,getOrdersByUser)
+router.route("/getmenu").post(authenticateUser,getItems)
+router.route("/search").post(authenticateUser,getItemsBysearch)
 
 export {router}
