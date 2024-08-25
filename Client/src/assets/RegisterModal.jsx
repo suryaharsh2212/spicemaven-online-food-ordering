@@ -67,7 +67,7 @@ function RegisterModal() {
 
 
     return (
-        <div className=''>
+        <div className='mb-20'>
             <dialog id="my_modal_6" className="modal modal-middle mt-5 p-5 ">
 
 
@@ -86,6 +86,7 @@ function RegisterModal() {
                                 src="https://img.freepik.com/free-vector/appointment-booking-with-smartphone_23-2148578379.jpg?uid=R81792226&ga=GA1.1.1500486508.1710956728&semt=ais_hybrid" 
                                 className="absolute inset-0 z-10 mt-10 md:mt-24 h-fit md:h-1/2 w-full "
                             />
+                            
 
                             
                         </section>
@@ -99,7 +100,7 @@ function RegisterModal() {
                                
                                 <Alerterror isVisible={user.showError} message={user.errorMessage} />
 
-                                <form onSubmit={handlesubmit} id='form' className="mt-8 grid grid-cols-6 w-full md:w-96 gap-6">
+                                <form onSubmit={handlesubmit} id='form' className=" mt-40 md:mt-5 grid grid-cols-6 w-80 md:w-96  gap-6">
 
                                     <div className="col-span-6 ">
                                         <label htmlFor="FirstName" className="block text-sm font-medium text-gray-700">
