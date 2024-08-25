@@ -99,7 +99,7 @@ function RegisterModal() {
                                
                                 <Alerterror isVisible={user.showError} message={user.errorMessage} />
 
-                                <form onSubmit={handlesubmit} id='form' className="mt-8 grid grid-cols-6 w-full md:w-96 gap-6">
+                                <form onSubmit={handlesubmit} id='form' className="mt-8 grid grid-cols-6 w-96 md:w-96 gap-6">
 
                                     <div className="col-span-6 ">
                                         <label htmlFor="FirstName" className="block text-sm font-medium text-gray-700">
