@@ -17,7 +17,7 @@ import Order_confo from './Components/Order_confo.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<App />}>
+    <Route path='/' element={<Finalizedetail/>}>
       <Route path='/' element={<Hero />} />
       <Route path='/user/restro/:id' element={<Menu />} />
       <Route path='/user/restro/:id/:name' element={<Profile />} />
