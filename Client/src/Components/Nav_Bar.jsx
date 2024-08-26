@@ -1,7 +1,7 @@
 
 'use client'
 import { ToastContainer, toast, Flip, Bounce } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.min.css';
+import 'react-toastify/dist/ReactToastify.min.css'; 
 
 import { useDispatch } from 'react-redux'
 import { useState, } from 'react'
@@ -76,7 +76,8 @@ export default function Final_Navbar() {
   }
 
   return (
-    <div className=" bg-zinc-100 z-50 w-full">
+    <div className=" bg-zinc-100  ">
+  
       {/* Mobile menu */}
       <Dialog open={open} onClose={setOpen} className="relative z-40 lg:hidden">
         <DialogBackdrop
@@ -259,8 +260,7 @@ export default function Final_Navbar() {
           </div>
         </nav>
       </header>
-      <LoginModal />
-      <RegisterModal />
+      
       <ToastContainer
         position="bottom-right"
         autoClose={5000}

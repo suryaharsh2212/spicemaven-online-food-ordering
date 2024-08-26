@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import Grid from './Grid';
 import Section_second from './Section_second';
 import DeliveryIcon from "./DeliveryIcon";
+import LoginModal from "./LoginModal";
+import RegisterModal from "./RegisterModal";
 
 
 export const Hero = () => {
@@ -54,11 +56,8 @@ export const Hero = () => {
         
       </section>
 
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        variants={variantsSecond}
-        transition={{ duration: 1.5, ease: "easeOut" }}
+      <div
+        
         className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8"
       >
         <div className="mx-auto max-w-3xl text-center">
@@ -89,10 +88,11 @@ export const Hero = () => {
             <dd className="text-4xl font-extrabold text-red-600 md:text-5xl">25k+</dd>
           </div>
         </dl>
-      </motion.div>
+      </div>
 
       <Section_second />
-      {/* <Grid />  */}
+      <LoginModal/>
+      <RegisterModal/>
     </div>
   );
 };

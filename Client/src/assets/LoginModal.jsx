@@ -40,12 +40,12 @@ function LoginModal() {
   };
 
   return (
-    <div>
+    <div className=' fixed' >
       <dialog id="my_modal_3" className="modal modal-middle bg-transparent">
         <div className="bg-white relative p-4 sm:p-6 lg:p-8">
           {/* Close Button */}
           <button
-            className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            className="btn scale-110 btn-sm btn-circle btn-ghost absolute right-2 top-2"
             onClick={() => document.getElementById('my_modal_3').close()}
           >
             ✕
@@ -55,7 +55,7 @@ function LoginModal() {
             <div className="mx-auto max-w-lg w-80">
               <img src="https://img.freepik.com/free-vector/sign-page-abstract-concept-illustration_335657-3875.jpg?size=626&ext=jpg&uid=R81792226&ga=GA1.1.1500486508.1710956728&semt=ais_hybrid" alt="" />
 
-              <Alerterror isVisible={user.showError} message={user.errorMessage} />
+              <Alerterror isVisible={user.showError} message={user.errorMessage} /> 
 
               <form onSubmit={handleSubmit} className="mb-0 h-fit space-y-4 md:-mt-10 -mt-3 rounded-lg p-4 sm:p-6 lg:p-8">
                 <p className="text-center text-lg font-medium">Sign in to your account</p>

@@ -31,8 +31,7 @@ function RegisterModal() {
             dispatch(setshowError('visible'))
             dispatch(seterrorMessage('email is not valid'))
         }
-        else if(!formDataObject.password.length >=8)
-        {
+        else if (!formDataObject.password.length >= 8) {
             dispatch(setshowError('visible'))
             dispatch(seterrorMessage('Password length must be of length 8'))
         }
@@ -68,37 +67,29 @@ function RegisterModal() {
 
     return (
         <div className=''>
-            <dialog id="my_modal_6" className="modal modal-middle mt-5 p-5 ">
+            <dialog id="my_modal_6" className="modal modal-middle p-5 ">
 
 
                 <section className="bg-white relative ">
                     <button
-                        className="btn z-50 btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                        className="btn z-50 btn-sm btn-circle scale-105 btn-ghost absolute right-2 top-2"
                         onClick={() => document.getElementById('my_modal_6').close()}
                     >
                         ✕
                     </button>
-                    <div className="lg:grid lg:min-h-screen lg:grid-cols-12">
-
-                        <section className="relative flex h-32 items-end  lg:col-span-5 lg:h-full xl:col-span-6">
-                            <img
-                                alt="err"
-                                src="https://img.freepik.com/free-vector/appointment-booking-with-smartphone_23-2148578379.jpg?uid=R81792226&ga=GA1.1.1500486508.1710956728&semt=ais_hybrid" 
-                                className="absolute inset-0 z-10 mt-10 md:mt-24 h-fit md:h-1/2 w-full "
-                            />
-                            
-
-                            
-                        </section>
+                    <div className="">
 
                         <main
-                            className="flex items-center justify-center px-8 py-8 sm:px-12 lg:col-span-7 lg:px-16 lg:py-12 xl:col-span-6"
+                            className="flex items-center justify-center px-8 py-8 "
                         >
 
-                            <div className="max-w-xl lg:max-w-3xl">
+                            <div className="  ">
+                                <h1>Register Your Account</h1>
 
-                               
-                                <Alerterror isVisible={user.showError} message={user.errorMessage} />
+
+
+                                <Alerterror isVisible={user.showError} message={user.errorMessage} /> 
+
 
                                 <form onSubmit={handlesubmit} id='form' className=" mt-40 md:mt-5 grid grid-cols-6 w-80 md:w-96  gap-6">
 
@@ -159,10 +150,10 @@ function RegisterModal() {
                                         <button type='submit'
                                             className="inline-block shrink-0 rounded-md border border-orange-600 bg-orange-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-orange-600 focus:outline-none focus:ring active:text-orange-500"
                                         >
-                                             {user.loadingstate
-                    ? <div className='flex justify-center'><img className="w-7 h-7 animate-spin " src="https://www.svgrepo.com/show/70469/loading.svg" alt="Loading icon" /></div>
-                    : <>Signup</>
-                  }
+                                            {user.loadingstate
+                                                ? <div className='flex justify-center'><img className="w-7 h-7 animate-spin " src="https://www.svgrepo.com/show/70469/loading.svg" alt="Loading icon" />Loading....</div>
+                                                : <>Signup</>
+                                            }
                                         </button>
 
                                         <p className="mt-4 text-sm text-gray-500 sm:mt-0">
