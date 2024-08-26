@@ -77,8 +77,9 @@ function Finalizedetail() {
         <div className='mt-10 h-screen '>
              
             <div className="container mx-auto px-4 py-6 lg:px-8">
+            {locater?  <><span className="loader "></span> <span>Locating you.....</span></> :<></>}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                {locater?  <><span className="loader "></span> <span>Locating you.....</span></> :<></>}
+                
                     <div className="col-span-2 bg-gray-200 h-64 md:h-full lg:h-auto">
                  
                         <Map />
