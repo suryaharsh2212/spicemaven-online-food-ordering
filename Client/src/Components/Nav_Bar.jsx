@@ -61,6 +61,7 @@ export default function Final_Navbar() {
     const res = await UseLogout();
     console.log("response from logged out", res);
     console.log(res.error);
+    setOpen(false) 
 
     if (!res.error) {
       dispatch(setLoginState(false))
@@ -108,7 +109,11 @@ export default function Final_Navbar() {
             <div className="space-y-6 border-t border-gray-200 px-4 py-6">
               <div className="flow-root">
                 <button
-                  onClick={() => document.getElementById('my_modal_3').showModal()}
+                  onClick={() => {
+                    document.getElementById('my_modal_3').showModal();
+                    setOpen(false);
+                  }}
+                  
                   className={`-m-2 block p-2 font-medium text-gray-900 ${loginState ? 'hidden' : 'visible'}`}>
                   Sign in
                 </button>
@@ -120,12 +125,15 @@ export default function Final_Navbar() {
               </div>
               <div className="flow-root">
                 <button
-                  onClick={() => document.getElementById('my_modal_6').showModal()}
+                  onClick={() =>{document.getElementById('my_modal_6').showModal();
+                  setOpen(false)
+                
+                }}
                   className={`-m-2 block p-2 font-medium text-gray-900 ${loginState ? 'hidden' : 'visible'}`}>
                   Create account
                 </button>
                 <button
-                  onClick={handleLogout}
+                  onClick={handleLogout }
                   className={`-m-2 block p-2 font-medium text-gray-900 ${loginState ? 'visible' : 'hidden'}`}>
                   Logout
                 </button>
