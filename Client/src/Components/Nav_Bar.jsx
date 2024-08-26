@@ -1,7 +1,8 @@
 
 'use client'
+import { ToastContainer, toast, Flip, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
-import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useState, } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -12,7 +13,6 @@ import {
 
 } from '@headlessui/react'
 import { Menu, MenuButton, MenuItems, MenuItem } from '@headlessui/react';
-import { ChevronDownIcon } from '@heroicons/react/20/solid';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useSelector } from 'react-redux'
 import LoginModal from '../assets/LoginModal'
@@ -29,7 +29,25 @@ export default function Final_Navbar() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const handlecart = () => {
-    navigate(`user/restro/${id}/cart`)
+    if(loginState)
+    {
+      navigate(`user/restro/${id}/cart`)
+    }
+    else{
+      toast.error(`Login to your Account `, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        
+        transition: Bounce,
+      });
+    }
+   
   }
   const moveToprofile = () => {
     navigate(`/user/restro/${id}/${name}`)
@@ -155,7 +173,7 @@ export default function Final_Navbar() {
                 <div >
 
                
-                  <h1 className=' text-3xl text-amber-600 ' style={{ fontFamily: 'CustomFont' }} >Spice Heaven</h1>
+                  <h1 className=' text-3xl text-amber-600 ' style={{ fontFamily: 'philobold' }} >Spice Heaven</h1>
                 </div>
               </div>
 
@@ -225,7 +243,12 @@ export default function Final_Navbar() {
                     onClick={handlecart}
                     className="group -m-2 flex items-center p-2">
 
-                    <img className='h-8 w-8 md:ml-5' src="https://cdn-icons-png.flaticon.com/128/3643/3643914.png" alt="" />
+                    <img className='h-8 w-8 md:ml-5'
+                    
+                    // src="https://cdn-icons-png.flaticon.com/128/3643/3643914.png" 
+                    src='https://cdn-icons-png.flaticon.com/128/9795/9795508.png'
+                    
+                    alt="" />
                     <span className="badge badge-sm indicator-item mb-2 text-white bg-cyan-500">{cart.length}</span>
 
 
@@ -238,6 +261,19 @@ export default function Final_Navbar() {
       </header>
       <LoginModal />
       <RegisterModal />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        transition={Flip}
+      />
     </div>
   )
 }
