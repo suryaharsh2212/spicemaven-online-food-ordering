@@ -49,7 +49,9 @@ export default function Final_Navbar() {
       navigate("/")
     }
     else {
-      alert("Some error occured while Logging Out")
+      // alert("Some error occured while Logging Out")
+      console.log(res.error);
+      
     }
 
 
