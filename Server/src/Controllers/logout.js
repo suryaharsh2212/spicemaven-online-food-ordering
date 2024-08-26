@@ -2,8 +2,8 @@
 
 export const logoutUser = async (req, res) => {
   try {
-    const user = req.user;
-    user.token = null;
+    // const user = req.user;
+    // user.token = null;
     // await user.save();
 
     // res.cookie('token', '', { httpOnly: false, expires: new Date(0) });
