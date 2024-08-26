@@ -44,7 +44,7 @@ function Menu() {
   }, [type]);
 
   const handleAddToCart = (item) => {
-    toast.warn(`${item.name} added to cart`, {
+    toast.warn(`${item.name} added to cart `, {
       position: "bottom-right",
       autoClose: 1000,
       hideProgressBar: false,
@@ -151,14 +151,15 @@ function Menu() {
 
       <ToastContainer
         position="bottom-right"
-        autoClose={5000}
+        autoClose={3000}
         hideProgressBar={false}
         newestOnTop
-        closeOnClick
+     
         rtl={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
+        closeOnClick={true}
         theme="colored"
         transition={Flip}
       />
