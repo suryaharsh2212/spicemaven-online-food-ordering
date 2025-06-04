@@ -1,31 +1,25 @@
 import jwt from 'jsonwebtoken';
-import { spiceUser } from '../Database/Model/UserModel.js';
 
-export const authenticateUser = async (req, res, next) => {
+export const authMiddleware = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return res.status(401).json({ message: 'Access denied. No token provided.' });
+  }
+
+  const token = authHeader.split(' ')[1];
+
   try {
-    const token = req.cookies.token;
-    if (!token) {
-      return res.status(401).json({ message: 'No token provided', error: true });
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log(decoded);
+    if (!decoded) {
+      return res.status(403).json({ message: 'Invalid token' ,error: true});
     }
-
-    const secretKey = process.env.JWT_SECRET || 'urtgr54g664yt6yhfhtt4';
-    const decoded = jwt.verify(token, secretKey);
-
-    const user = await spiceUser.findById(decoded.id);
-
-    if (!user) {
-      return res.status(401).json({ message: 'User not found', error: true });
-    }
-
-    req.user = user;
+    req.user = decoded; 
     next();
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    console.log(err);
     
-    if (error.name === 'TokenExpiredError') {   
-      return res.status(401).json({ message: 'Token expired', error: true });
-    }
-    console.error('Error authenticating user:', error.message);
-    res.status(401).json({ message: 'Unauthorized', error: true });
+    res.status(403).json({ message: 'Invalid or expired token',error: true });
   }
 };

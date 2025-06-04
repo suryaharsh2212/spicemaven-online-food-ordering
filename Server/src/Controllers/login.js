@@ -5,6 +5,8 @@ import { generateToken } from "../Utilities/generateToken.js";
 export const loginUser = async (req, res) => {
     try {
       const { emailOrPhone, password } = req.body;
+      console.log("Login request received with data:", req.body);
+      
       if (!emailOrPhone || !password) {
         return res.status(400).json({ message: 'All fields are required' });
       }
@@ -29,13 +31,7 @@ export const loginUser = async (req, res) => {
       await user.save();
   
 
-      res.cookie('token', token, {
-        httpOnly: false,  
-        secure: process.env.NODE_ENV === 'production',  
-       
-    });
-    
-  
+     
 
       res.status(200).json({
         message: 'spiceUser logged in successfully',
