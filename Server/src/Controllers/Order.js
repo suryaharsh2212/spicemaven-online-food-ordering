@@ -2,18 +2,9 @@ import { Order } from '../Database/Model/OrderModel.js';
 import { OrderDetail } from '../Database/Model/Orderdetail.js';
 
 
-
-
-
-
 export const createOrder = async (req, res) => {
   try {
     const { userID, orderDetails } = req.body;
-    console.log(req.body);
-    
-    
-    
-
     if (!userID || !orderDetails || !Array.isArray(orderDetails) || orderDetails.length === 0) {
       return res.status(400).json({ message: 'User ID and order details are required' });
     }
@@ -25,7 +16,7 @@ export const createOrder = async (req, res) => {
       return new OrderDetail({
         orderId: savedOrder._id,
         dish: detail.dishId,
-        quantity: detail.quantity
+        quantity: detail.quantity 
       }).save();
     });
 

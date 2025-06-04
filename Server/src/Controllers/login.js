@@ -5,10 +5,6 @@ import { generateToken } from "../Utilities/generateToken.js";
 export const loginUser = async (req, res) => {
     try {
       const { emailOrPhone, password } = req.body;
-      
-      
-     
-      
       if (!emailOrPhone || !password) {
         return res.status(400).json({ message: 'All fields are required' });
       }
