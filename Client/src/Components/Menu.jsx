@@ -14,16 +14,16 @@ function Menu() {
   const navigate = useNavigate();
   const [type, setType] = useState('Starters');
   const [dishes, setDishes] = useState([]);
-  const st = useSelector((state) => state.user.loggedIn);
+  const token=localStorage.getItem('token');
   const dispatch = useDispatch();
   const [search, setSearch] = useState('')
   useEffect(() => {
-    if (st === false) {
+    if (!token) {
       navigate("/");
       alert("session expired");
       dispatch(logout());
     }
-  }, [st, navigate, dispatch]);
+  }, [ navigate, dispatch]);
 
   useEffect(() => {
     const callitem = async () => {

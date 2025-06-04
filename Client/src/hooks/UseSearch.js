@@ -7,6 +7,7 @@ export const UseSearch = async (name) => {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Credentials': true,
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify({ name }),
       });

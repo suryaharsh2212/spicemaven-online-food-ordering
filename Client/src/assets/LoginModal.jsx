@@ -29,7 +29,7 @@ function LoginModal() {
       dispatch(setPhoneNo(res.user.phoneNo));
       dispatch(setName(res.user.name));
       dispatch(setLoginState(true));
-
+      localStorage.setItem('token', res.token);
       document.getElementById('my_modal_3').close();
       navigate(`/user/restro/${res.user.id}`);
     }

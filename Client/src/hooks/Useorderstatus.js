@@ -7,6 +7,7 @@ export const UseOrderStatus = async (userID) => {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Credentials': true,
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
         body: JSON.stringify({userID}),
       });
