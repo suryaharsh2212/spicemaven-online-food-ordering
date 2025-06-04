@@ -18,20 +18,18 @@ export const Hero = () => {
   };
 
   return (
-    <div  style={{fontFamily:"philobold"}}>
+    <div style={{ fontFamily: "philobold" }}>
       <section className="relative  md:h-screen overflow-hidden">
-        {/* Background Image and Overlay */}
         <div className="absolute inset-0">
           <img
-            className="object-cover w-full h-full bg-orange-500 brightness-90" 
-            src="https://cdn.pixabay.com/photo/2016/11/18/14/05/brick-wall-1834784_1280.jpg" 
+            className=" object-cover w-full h-full bg-orange-500 brightness-90"
+            src="https://cdn.pixabay.com/photo/2016/11/18/14/05/brick-wall-1834784_1280.jpg"
             // src="https://cdn.pixabay.com/photo/2017/06/06/22/37/italian-cuisine-2378729_640.jpg" 
-            alt="Restaurant background" 
+            // src="https://res.cloudinary.com/dllgqcla4/image/upload/v1749050183/ChatGPT_Image_Jun_4_2025_08_46_01_PM_gbstj5.png"
+            alt="Restaurant background"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-orange via-transparent to-transparent"></div>
         </div>
-
-        {/* Hero Content */}
         <motion.div
           initial="hidden"
           animate="visible"
@@ -39,7 +37,6 @@ export const Hero = () => {
           transition={{ duration: 1.5, ease: "easeOut" }}
           className="relative z-10 flex flex-col items-center justify-center min-h-screen py-16 px-4 text-center"
         >
-        {/* <DeliveryIcon/>  */}
           <h1 className="text-5xl text-slate-300 font-extrabold mb-6 leading-tight tracking-tight md:text-6xl lg:text-7xl transition-transform transform hover:scale-105">
             Welcome to <span className=" text-orange-500">Spice Haven</span>
           </h1>
@@ -53,11 +50,11 @@ export const Hero = () => {
             Get Started
           </button>
         </motion.div>
-        
+
       </section>
 
       <div
-        
+
         className="mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8"
       >
         <div className="mx-auto max-w-3xl text-center">
@@ -91,8 +88,8 @@ export const Hero = () => {
       </div>
 
       <Section_second />
-      <LoginModal/>
-      <RegisterModal/>
+      <LoginModal />
+      <RegisterModal />
     </div>
   );
 };

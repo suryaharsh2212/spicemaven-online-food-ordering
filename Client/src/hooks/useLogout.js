@@ -1,8 +1,8 @@
-import fetchWithAuth from "../Utility/apiutility";
+import API_URL from "../Utility/constant";
 
 export const UseLogout = async () => {
   try {
-    const response = await fetch('https://spicemaven-online-food-ordering-backend.vercel.app/restro/logout', {
+    const response = await fetch(`${API_URL}/restro/logout`, {
       method: 'POST',
       credentials: 'include',
       headers: {

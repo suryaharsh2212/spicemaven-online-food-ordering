@@ -1,6 +1,7 @@
+import API_URL from "../Utility/constant";
 export const UseOrderStatus = async (userID) => {
     try {
-      const response = await fetch('https://spicemaven-online-food-ordering-backend.vercel.app/restro/showorder', {
+      const response = await fetch(`${API_URL}/restro/showorder`, {
         method: 'POST',
         credentials: "include",
         headers: {

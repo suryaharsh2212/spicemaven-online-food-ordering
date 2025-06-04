@@ -1,21 +1,4 @@
-// export default async function address(long,lat)
-// {
-//    await fetch(`https://api.olamaps.io/places/v1/autocomplete?location=${lat},${long}&input=landmark&api_key=RXOAN8qwwE5Ze8YTC6xUN9oM5xg90wvETPTct8Gb`, {
-//         method: 'GET',
-//         headers: {
-//           'X-Request-Id': 'YOUR_REQUEST_ID'
-//         }
-//       })
-//       .then(response => response.json())
-//       .then(data => {
-//         console.log('Success:', data.predictions);
-//       })
-//       .catch(error => {
-//         console.error('Error:', error);
-//       });const lat=
-// }
 
-// address(77.579701, 13.133041)
 const lat=23.503
 const long=85.4757
 

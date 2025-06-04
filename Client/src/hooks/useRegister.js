@@ -1,8 +1,8 @@
-import fetchWithAuth from "../Utility/apiutility";
+import API_URL from "../Utility/constant";
 
 export const UseRegister = async (formDataObject) => {
   try {
-    const response = await fetchWithAuth('https://spicemaven-online-food-ordering-backend.vercel.app/restro/register', {
+    const response = await fetch(`${API_URL}/restro/register`, {
       method: 'POST',
       credentials: 'include',
       headers: {

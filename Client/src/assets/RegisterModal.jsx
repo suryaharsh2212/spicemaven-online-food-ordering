@@ -53,33 +53,22 @@ function RegisterModal() {
                 dispatch(seterrorMessage(res.message))
             }
         }
-
-
-
-
-
-
-
     }
-
-    
-
-
     return (
         <div>
             <dialog id="my_modal_6" className="modal flex justify-center">
-            <Alerterror isVisible={user.showError} message={user.errorMessage} />
+                <Alerterror isVisible={user.showError} message={user.errorMessage} />
                 <div className="modal-box">
-                <button
-        className="btn z-50 btn-sm btn-circle scale-125 btn-ghost absolute right-2 top-2"
-        onClick={() => document.getElementById('my_modal_6').close()}
-    >
-        ✕
-    </button>
+                    <button
+                        className="btn z-50 btn-sm btn-circle scale-125 btn-ghost absolute right-2 top-2"
+                        onClick={() => document.getElementById('my_modal_6').close()}
+                    >
+                        ✕
+                    </button>
                     <h1 className='text-center text-2xl mb-5'>Register your Account</h1>
-               
+
                     <div className=' flex justify-center items-center p-5' >
-                      
+
 
 
                         <form onSubmit={handlesubmit} id='form' className="  md:mt-5 grid grid-cols-6 w-80 md:w-96  gap-6">
@@ -139,12 +128,12 @@ function RegisterModal() {
 
                             <div className="col-span-6 flex flex-col sm:items-center sm:gap-4 mt-5">
                                 <button type='submit'
-                                    className="inline-block shrink-0 rounded-md border border-orange-600 bg-orange-600 px-12 w-full py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-orange-600 focus:outline-none focus:ring active:text-orange-500"
+                                    className="inline-block shrink-0 rounded-md border border-orange-600 bg-orange-600 px-12 w-full py-3 text-sm font-medium text-white transition  hover:text-white  focus:outline-none focus:ring active:text-orange-500"
                                 >
                                     {user.loadingstate
-                                        ? <div className='flex justify-center'><img className="w-7 h-7 animate-spin " src="https://www.svgrepo.com/show/70469/loading.svg" alt="Loading icon" />Loading....</div>
-                                        : <>Signup</>
-                                    }
+                    ? <div className='flex justify-center'><img className="w-7 h-7 animate-spin " src="https://www.svgrepo.com/show/70469/loading.svg" alt="Loading icon" /></div>
+                    : <>Register</>
+                  }
                                 </button>
 
                                 <p className="mt-4 text-sm text-gray-500 sm:mt-0">

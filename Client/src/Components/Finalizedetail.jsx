@@ -4,11 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { UseGenerateOrder } from '../hooks/useGenerateorder';
 import { clearCart } from '../redux/cartslice';
-
+import { CheckCircle } from 'lucide-react';
 function Finalizedetail() {
     const cart = useSelector((state) => state.cart.items);
     const userDetails = useSelector((state) => state.user.id);
     const [addresses, setAddresses] = React.useState([]);
+    const [showConfirmation, setShowConfirmation] = useState(false);
     const [spinner,setSpinner]=useState(false)
     const [locater,setLocater]=useState(false)
     const [lat, setLat] = React.useState('');
@@ -28,7 +29,10 @@ function Finalizedetail() {
         const response = await UseGenerateOrder(orderObject);
         dispatch(clearCart());
         setSpinner(false)
-        navigate(`/user/restro/${userDetails}/confirmOrder`);
+        setShowConfirmation(true);
+        setTimeout(() => {
+      navigate(`/user/restro/${userDetails}/confirmOrder`);
+    }, 2000);
     };
 
     navigator.geolocation.getCurrentPosition((position) => {
@@ -73,6 +77,23 @@ function Finalizedetail() {
         fetchAddressSuggestions();
     }, [lat, long]);
 
+      if (showConfirmation) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] bg-white px-4 py-10 text-center">
+        <CheckCircle className="text-orange-500 w-16 h-16 mb-4" strokeWidth={1.5} />
+        <h2 className="text-2xl font-bold text-orange-600 mb-2">Order Placed Successfully!</h2>
+        <p className="text-gray-600 mb-6">
+          Thank you for your order. We’ve received it and are preparing your delicious food!
+        </p>
+        <button
+          disabled
+          className="bg-orange-500 text-white px-6 py-2 rounded-full font-semibold shadow-md opacity-70 cursor-not-allowed"
+        >
+          Redirecting...
+        </button>
+      </div>
+    );
+  }
     return (
         <div className='mt-10 h-screen '>
              

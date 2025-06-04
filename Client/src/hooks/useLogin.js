@@ -1,8 +1,8 @@
 
-
+import API_URL from "../Utility/constant";
 export const UseLogin = async (emailOrPhone, password,) => {
   try {
-    const response = await fetch('https://spicemaven-online-food-ordering-backend.vercel.app/restro/login', {
+    const response = await fetch(`${API_URL}/restro/login`, {
       method: 'POST',
       credentials: "include",
       headers: {

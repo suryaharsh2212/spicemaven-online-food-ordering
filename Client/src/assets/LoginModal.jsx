@@ -40,9 +40,9 @@ function LoginModal() {
   };
 
   return (
-    <div className=' fixed ' >
+    <div className=' fixed' >
       <dialog id="my_modal_3" className="modal modal-middle bg-transparent ">
-        <div className="bg-white relative p-4 sm:p-6 lg:p-8">
+        <div className="bg-white relative p-4 sm:p-6 lg:p-8 rounded-lg">
           {/* Close Button */}
           <button
             className="btn scale-110 btn-sm btn-circle btn-ghost absolute right-2 top-2"

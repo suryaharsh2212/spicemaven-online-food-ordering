@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { OlaMaps } from '../OlaMapsWebSDK/OlaMapsWebSDK/olamaps-js-sdk.es';
 import '../OlaMapsWebSDK/OlaMapsWebSDK/style.css';
-import AddressSuggestions from './AddressSuggestions';
 
 function Map() {
    const [lat,setLat]=useState('')
@@ -50,4 +49,3 @@ function Map() {
 }
 
 export default Map;
- {/* <AddressSuggestions lat={lat} long={long}/>  */}

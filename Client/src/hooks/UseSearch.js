@@ -1,6 +1,7 @@
+import API_URL from "../Utility/constant.js";
 export const UseSearch = async (name) => {
     try {
-      const response = await fetch('https://spicemaven-online-food-ordering-backend.vercel.app/restro/search', {
+      const response = await fetch(`${API_URL}/restro/search`, {
         method: 'POST',
         credentials: "include",
         headers: {
