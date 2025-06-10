@@ -62,6 +62,7 @@ export default function Final_Navbar() {
     console.log("response from logged out", res);
     console.log(res.error);
     setOpen(false) 
+    localStorage.removeItem("token")
 
     if (!res.error) {
       dispatch(setLoginState(false))
