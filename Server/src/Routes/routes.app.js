@@ -12,7 +12,7 @@ import { authMiddleware } from "../Middleware/authMiddleware.js";
 const router=Router();
 
 router.route("/register").post(registerUser)
-router.route("/login").post(loginUser)
+router.route("/login").post(authMiddleware,loginUser)
 router.route("/logout").post(authMiddleware,logoutUser)
 router.route("/order").post(authMiddleware,createOrder)
 router.route("/showorder").post(authMiddleware,getOrdersByUser)

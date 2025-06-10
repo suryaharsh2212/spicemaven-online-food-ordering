@@ -2,11 +2,8 @@
 
 export const logoutUser = async (req, res) => {
   try {
-    // const user = req.user;
-    // user.token = null;
-    // await user.save();
-
-    // res.cookie('token', '', { httpOnly: false, expires: new Date(0) });
+    const userId = req.user._id; 
+    console.log("Logout request received for user ID:", userId);
 
     res.status(200).json({
       message: 'User logged out successfully',

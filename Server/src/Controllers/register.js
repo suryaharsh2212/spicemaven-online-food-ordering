@@ -1,7 +1,7 @@
 
 import bcrypt from "bcrypt"
 import { spiceUser } from "../Database/Model/UserModel.js";
-
+import { generateToken } from "../Utilities/generateToken.js";
 
 
 export const registerUser = async (req, res) => {
@@ -26,7 +26,10 @@ export const registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
     
     
-
+      const token = generateToken(user);
+  
+      user.token = token;
+      await user.save();
     const newUser = new spiceUser({
       name,
       email,
@@ -47,7 +50,8 @@ export const registerUser = async (req, res) => {
         phoneNo: newUser.phoneNo,
         createdAt: newUser.createdAt,
         updatedAt: newUser.updatedAt
-      }
+      },
+      token
     });
   } catch (error) {
     console.error('Error registering user:', error);
