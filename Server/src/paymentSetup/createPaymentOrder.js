@@ -3,12 +3,13 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const createOrder = async (req, res) => {
+const createPaymentOrder = async (req, res) => {
     try {
-        const instance = new Razorpay({ key_id: "", key_secret: "" })
+        const {amount}= req.body;
+        const instance = new Razorpay({ key_id: process.env.KEYID, key_secret: process.env.KEYSECRET })
         const receiptId = generateReceiptId();
         instance.orders.create({
-            amount: 500,
+            amount: amount,
             currency: "INR",
             receipt: receiptId,
             notes: {
@@ -18,17 +19,25 @@ const createOrder = async (req, res) => {
         })
         .then((order) => {
             console.log('Order created successfully:', order);
+            res.status(200).json({
+                success: true,
+                orderId: order.id,
+                amount: order.amount,
+                currency: order.currency,
+                receipt: order.receipt
+            });
            
         })
         .catch((error) => {
             console.error('Error creating order:', error);
-            
+            res.status(500).json({ message: 'Internal server error', error: true });
         });
     } catch (error) {
         console.error('Error creating order:', error);
         
     }
 }
+export default createPaymentOrder;
 
 
 

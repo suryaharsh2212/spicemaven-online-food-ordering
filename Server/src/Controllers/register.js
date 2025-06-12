@@ -26,9 +26,11 @@ export const registerUser = async (req, res) => {
       phoneNo,
       password: hashedPassword
     });
+    await user.save();
+    
     const token = generateToken(user);
     user.token = token;
-    await user.save();
+    
 
     res.status(201).json({
       message: 'spiceUser registered successfully',
