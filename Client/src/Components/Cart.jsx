@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import Items from './Items';
 import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css'
 import { useNavigate } from 'react-router-dom';
+import { setPrice } from '../redux/slice';
 function Cart() {
+  const dispatch=useDispatch();
   const items = useSelector((state) => state.cart.items);
   const id=useSelector((state)=> state.user.id)
   const [totalPrice, setTotalPrice] = useState(0);
@@ -20,7 +22,7 @@ function Cart() {
 
     setTotalPrice(calculatedTotal);
     setFinalPrice(calculatedTotal);
-  }, [items]);
+  }, [,items,finalPrice]);
 
   const applyDiscount = () => {
     if (discount === 'SURYA100') {
@@ -52,6 +54,7 @@ function Cart() {
     }
   };
   const GotoMaps=()=>{
+     dispatch(setPrice(finalPrice))
     if(items.length>=1)
     {
       navigate(`/user/restro/${id}/location`)
