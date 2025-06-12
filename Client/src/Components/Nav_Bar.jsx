@@ -64,9 +64,21 @@ export default function Final_Navbar() {
     setOpen(false) 
     localStorage.removeItem("token")
 
-    if (!res.error) {
+    if (res.error === false) {
+      toast.success(`Logged out successfully`, {
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        
+        transition: Bounce,
+      });
       dispatch(setLoginState(false))
-      navigate("/")
+      navigate('/')
     }
     else {
       // alert("Some error occured while Logging Out")

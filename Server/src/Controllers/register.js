@@ -20,31 +20,26 @@ export const registerUser = async (req, res) => {
     }
     const hashedPassword = await bcrypt.hash(password, 10);
 
-
-    const token = generateToken(user);
-
-    user.token = token;
-    await user.save();
-    const newUser = new spiceUser({
+    const user = new spiceUser({
       name,
       email,
       phoneNo,
       password: hashedPassword
     });
-
-
-    await newUser.save();
+    const token = generateToken(user);
+    user.token = token;
+    await user.save();
 
     res.status(201).json({
       message: 'spiceUser registered successfully',
       error: false,
       user: {
-        id: newUser._id,
-        name: newUser.name,
-        email: newUser.email,
-        phoneNo: newUser.phoneNo,
-        createdAt: newUser.createdAt,
-        updatedAt: newUser.updatedAt
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phoneNo: user.phoneNo,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
       },
       token
     });

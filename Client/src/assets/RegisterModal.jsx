@@ -5,15 +5,17 @@ import { setEmail, setId, setName, setPhoneNo, setLoginState, seterrorMessage, s
 import { useNavigate } from 'react-router-dom';
 import Alerterror from './Alerterror';
 import { EmailVerifier, PhoneNoVerifier } from '../Utility/Verification';
+
 function RegisterModal() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const user = useSelector((state) => state.user)
-
+    const [loadingstate, setLoadingState] = React.useState(false);
 
 
     const handlesubmit = async (e) => {
         e.preventDefault()
+        setLoadingState(true)
         const form = document.getElementById('form');
         const formdata = new FormData(form);
 
@@ -45,11 +47,13 @@ function RegisterModal() {
                 dispatch(setPhoneNo(res.user.phoneNo))
                 document.getElementById("my_modal_6").close()
                 navigate(`/user/restro/${res.user.id}`)
+                setLoadingState(false)
                 dispatch(setshowError('hidden'))
                 dispatch(seterrorMessage(''))
             }
             else {
                 dispatch(setshowError('visible'))
+                setLoadingState(false)
                 dispatch(seterrorMessage(res.message))
             }
         }
@@ -119,21 +123,14 @@ function RegisterModal() {
                                     className="mt-1 w-full p-3  rounded-md border-gray-200 bg-gray-100  text-sm text-gray-700 shadow-sm"
                                 />
                             </div>
-
-
-
-
-
-
-
                             <div className="col-span-6 flex flex-col sm:items-center sm:gap-4 mt-5">
                                 <button type='submit'
                                     className="inline-block shrink-0 rounded-md border border-orange-600 bg-orange-600 px-12 w-full py-3 text-sm font-medium text-white transition  hover:text-white  focus:outline-none focus:ring active:text-orange-500"
                                 >
-                                    {user.loadingstate
-                    ? <div className='flex justify-center'><img className="w-7 h-7 animate-spin " src="https://www.svgrepo.com/show/70469/loading.svg" alt="Loading icon" /></div>
-                    : <>Register</>
-                  }
+                                    {loadingstate
+                                        ? <div className='flex justify-center'><img className="w-7 h-7 animate-spin " src="https://www.svgrepo.com/show/70469/loading.svg" alt="Loading icon" /></div>
+                                        : <>Register</>
+                                    }
                                 </button>
 
                                 <p className="mt-4 text-sm text-gray-500 sm:mt-0">
