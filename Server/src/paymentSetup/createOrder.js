@@ -5,7 +5,7 @@ dotenv.config();
 
 const createOrder = async (req, res) => {
     try {
-        const instance = new Razorpay({ key_id: "rzp_test_SIcBw0q2hsI9Db", key_secret: "By1sgRfE44Izjz4Fl3cVPnTC" })
+        const instance = new Razorpay({ key_id: "", key_secret: "" })
         const receiptId = generateReceiptId();
         instance.orders.create({
             amount: 500,
