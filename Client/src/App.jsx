@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux';
 import { setLoginState } from './redux/slice';
 import Footer from './Components/Footer'
 import Final_Navbar from './Components/Nav_Bar';
+import TestModeBanner from './assets/Banner';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
     <div>
 
       <Final_Navbar/>
+      <TestModeBanner/>
       <Outlet />
       <Footer />
 
