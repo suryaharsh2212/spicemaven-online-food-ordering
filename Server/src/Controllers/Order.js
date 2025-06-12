@@ -10,6 +10,7 @@ export const createOrder = async (req, res) => {
     }
 
     const newOrder = new Order({ userID });
+    
     const savedOrder = await newOrder.save();
 
     const orderDetailsPromises = orderDetails.map(detail => {
