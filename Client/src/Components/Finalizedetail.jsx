@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import Map from './Map';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { UseGenerateOrder } from '../hooks/useGenerateorder';
 import { clearCart } from '../redux/cartslice';
-
+import { ToastContainer, toast, Flip, Bounce } from 'react-toastify';
 import RazorpayButton from './Payment';
 function Finalizedetail() {
     const cart = useSelector((state) => state.cart.items);
@@ -18,43 +17,48 @@ function Finalizedetail() {
     const dispatch = useDispatch();
     const[paymentStartController ,setpaymentStartController ]=useState(false);
 
-    // const GenerateOrder = async () => {
-        // setSpinner(true)
-        // const orderObject = {
-        //     userID: userDetails,
-        //     orderDetails: cart.map(item => ({
-        //         dishId: item._id,
-        //         quantity: item.quantity,
-        //     })),
-        // };
-        // const response = await UseGenerateOrder(orderObject);
+const GenerateOrder = async () => {
+  setSpinner(true);
 
-        // dispatch(clearCart());
-        // setSpinner(false)
-        // setShowConfirmation(true);
-    //     setTimeout(() => {
-    //   navigate(`/user/restro/${userDetails}/confirmOrder`);
-    // }, 2000);
-    // };
-    const GenerateOrder = async () => {
-        setSpinner(true);
-        setpaymentStartController(true);
-        setSpinner(true)
-        const orderObject = {
-            userID: userDetails,
-            orderDetails: cart.map(item => ({
-                dishId: item._id,
-                quantity: item.quantity,
-            })),
-        };
-        // setShowConfirmation(true)
-        const response = await UseGenerateOrder(orderObject);
-        // setShowConfirmation(true)
+  const orderObject = {
+    userID: userDetails,
+    orderDetails: cart.map(item => ({
+      dishId: item._id,
+      quantity: item.quantity,
+    })),
+  };
 
-        dispatch(clearCart());
-        setSpinner(false)
-        // setShowConfirmation(true);
+  try {
+    const response = await UseGenerateOrder(orderObject);
+    console.log("Response from order generation:", response);
+
+    if ( response?.flag === 'pending' ) {
+      toast.error(" You already have a pending order. Please wait until it is completed.", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        theme: "colored",
+        transition: Bounce, 
+      });
+      setSpinner(false);
+      return; 
     }
+
+    console.log("Order generated successfully:", response);
+    setpaymentStartController(true);
+    dispatch(clearCart());
+
+  } catch (error) {
+    console.error("Error during order generation:", error);
+    toast.error("Something went wrong while placing your order.");
+  }
+
+  setSpinner(false);
+};
+
 
     navigator.geolocation.getCurrentPosition((position) => {
         const { latitude, longitude } = position.coords;
@@ -103,9 +107,9 @@ function Finalizedetail() {
         <div className='mt-10 h-screen '>
 
             {paymentStartController ?
-                <>
+                <div className="flex mt-4 items-center justify-center">
                     <RazorpayButton amount={total} />
-                </>
+                </div>
                 :
                 <div className="container mx-auto px-4 py-6 lg:px-8">
                     {locater ? <><span className="loader "></span> <span>Locating you.....</span></> : <></>}
@@ -169,6 +173,19 @@ function Finalizedetail() {
                     </div>
                 </div>
             }
+             <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="colored"
+                    transition={Flip}
+                  />
         </div>
     );
 

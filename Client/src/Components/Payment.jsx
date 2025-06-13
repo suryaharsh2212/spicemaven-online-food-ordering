@@ -91,7 +91,7 @@ const RazorpayButton = ({ amount }) => {
         paymentObject.open();
     };
 
-    return <div className="min-h-screen bg-gradient-to-br from-orange-50 to-white flex items-center justify-center px-4">
+    return <div className="h-full  bg-gradient-to-br from-orange-50 to-white flex items-center justify-center px-4">
         <div className="bg-white shadow-2xl rounded-3xl p-8 max-w-md w-full">
             <div className="flex flex-col items-center text-center">
                 <CreditCard className="text-orange-500 w-12 h-12 mb-4" />

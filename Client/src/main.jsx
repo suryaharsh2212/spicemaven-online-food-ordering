@@ -11,14 +11,17 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './redux/store.js';
 import Profile from './Components/Profile.jsx'; 
 import Cart from './Components/Cart.jsx';
-
 import Finalizedetail from './Components/Finalizedetail.jsx';
 import Order_confo from './Components/Order_confo.jsx';
+import RestroLogin from './restroControl/RestroLogin.jsx';
+import RestroOrder from './restroControl/RestroOrder.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App/>}>
       <Route path='/' element={<Hero />} />
+      <Route path='/restro-login' element={<RestroLogin/>} />
+      <Route path='/restro-order' element={<RestroOrder/>} />
       <Route path='/user/restro/:id' element={<Menu />} />
       <Route path='/user/restro/:id/:name' element={<Profile />} />
       <Route path='/user/restro/:id/cart' element={<Cart/>}/>
