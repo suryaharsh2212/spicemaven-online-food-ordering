@@ -1,30 +1,35 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import API_URL from '../Utility/constant';
+import { RefreshCw } from 'lucide-react';
+
 
 function RestroOrder() {
   const [orders, setOrders] = useState([]);
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [newStatus, setNewStatus] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+
+  const fetchOrders = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(`${API_URL}/restro/order/today`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const data = await response.json();
+      setOrders(data);
+    } catch (err) {
+      console.error('Error fetching orders:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchOrders = async () => {
-      try {
-        const response = await fetch(`${API_URL}/restro/order/today`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
-        const data = await response.json();
-        setOrders(data);
-        console.log(data);
-      } catch (err) {
-        console.error('Error fetching orders:', err);
-      }
-    };
-
     fetchOrders();
   }, []);
 
@@ -46,7 +51,6 @@ function RestroOrder() {
       if (data.error) {
         alert(data.message);
       } else {
-        // Optimistically update UI
         setOrders(prev =>
           prev.map(order =>
             order._id === selectedOrder._id ? { ...order, status: newStatus } : order
@@ -60,71 +64,83 @@ function RestroOrder() {
   };
 
   return (
-    <div className="p-4 min-h-screen bg-gray-100">
-      <h2 className="text-2xl font-bold mb-6 text-center">📦 Today's Orders</h2>
+    <div className="p-4 min-h-screen bg-gray-100 relative">
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 px-4">
+        <h2 className="text-2xl font-bold text-center md:text-left"> Today's Orders</h2>
+        <button
+          onClick={fetchOrders}
+          disabled={loading}
+          className={`mt-3 md:mt-0 flex items-center gap-2 text-sm px-4 z-40 py-2 rounded shadow transition ${loading ? 'bg-gray-300 cursor-not-allowed text-gray-700' : 'bg-orange-500 text-white hover:bg-orange-600'
+            }`}
+        >
+          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+          <span>{loading ? 'Refreshing...' : 'Refresh'}</span>
+        </button>
+      </div>
+
+
 
       {orders?.length === 0 ? (
         <p className="text-center text-gray-600">No orders placed today.</p>
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
           {orders?.map(order => (
-  <motion.div
-    key={order._id}
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.3 }}
-    className="bg-white p-4 rounded-xl shadow hover:shadow-md cursor-pointer space-y-4"
-    onClick={() => {
-      setSelectedOrder(order);
-      setNewStatus(order.status);
-      setModalOpen(true);
-    }}
-  >
-    <div className="flex justify-between items-center">
-      <span className="font-semibold text-sm text-gray-700">Order ID:</span>
-      <span className="text-xs text-gray-500">{order._id}</span>
-    </div>
+            <motion.div
+              key={order._id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
+              className="bg-white p-4 rounded-xl shadow hover:shadow-md cursor-pointer space-y-4"
+              onClick={() => {
+                setSelectedOrder(order);
+                setNewStatus(order.status);
+                setModalOpen(true);
+              }}
+            >
+              <div className="flex justify-between items-center">
+                <span className="font-semibold text-sm text-gray-700">Order ID:</span>
+                <span className="text-xs text-gray-500">{order._id}</span>
+              </div>
 
-    <div className="text-sm text-gray-600">
-      <p>Status: <span className="font-semibold text-orange-600 capitalize">{order.status}</span></p>
-      <p>Time: {new Date(order.createdAt).toLocaleTimeString()}</p>
-    </div>
+              <div className="text-sm text-gray-600">
+                <p>Status: <span className="font-semibold text-orange-600 capitalize">{order.status}</span></p>
+                <p>Time: {new Date(order.createdAt).toLocaleTimeString()}</p>
+              </div>
 
-    <div className="border-t pt-2 space-y-3">
-      {order?.details.map((item) => (
-        <div key={item._id} className="flex items-center justify-between">
-          {/* Left: Image and name */}
-          <div className="flex items-center gap-3">
-            <img src={item.dish.image} alt={item.dish.name} className="w-14 h-14 rounded-lg object-cover" />
-            <div>
-              <h4 className="font-semibold text-gray-800 text-sm">{item.dish.name}</h4>
-              <p className="text-xs text-gray-500">{item.dish.section}</p>
-              <span
-                className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-medium ${
-                  item.dish.vegetarian === "true"
-                    ? 'bg-green-100 text-green-700'
-                    : 'bg-red-100 text-red-700'
-                }`}
-              >
-                {item.dish.vegetarian === "true" ? 'Vegetarian' : 'Non-Vegetarian'}
-              </span>
-            </div>
-          </div>
+              <div className="border-t pt-2 space-y-3">
+                {order?.details.map((item) => (
+                  <div key={item._id} className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <img
+                        src={item.dish.image}
+                        alt={item.dish.name}
+                        className="w-14 h-14 rounded-lg object-cover"
+                      />
+                      <div>
+                        <h4 className="font-semibold text-gray-800 text-sm">{item.dish.name}</h4>
+                        <p className="text-xs text-gray-500">{item.dish.section}</p>
+                        <span
+                          className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-medium ${item.dish.vegetarian === "true"
+                            ? 'bg-green-100 text-green-700'
+                            : 'bg-red-100 text-red-700'
+                            }`}
+                        >
+                          {item.dish.vegetarian === "true" ? 'Vegetarian' : 'Non-Vegetarian'}
+                        </span>
+                      </div>
+                    </div>
 
-          {/* Right: Quantity */}
-          <div className="text-sm text-gray-700 font-medium">
-            Qty: {item.quantity}
-          </div>
-        </div>
-      ))}
-    </div>
-  </motion.div>
-))}
-
+                    <div className="text-sm text-gray-700 font-medium">
+                      Qty: {item.quantity}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          ))}
         </div>
       )}
 
-    
       <AnimatePresence>
         {modalOpen && selectedOrder && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
