@@ -9,7 +9,7 @@ export const UseOrderStatus = async (userID) => {
           'Access-Control-Allow-Credentials': true,
           'Authorization': `Bearer ${localStorage.getItem('token')}`,
         },
-        body: JSON.stringify({userID}),
+        body: JSON.stringify({ userID }),
       });
   
       const data = await response.json();

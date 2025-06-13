@@ -1,4 +1,4 @@
-import React from 'react'
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
@@ -41,6 +41,14 @@ function Footer() {
       <li>
         <a target='_blank' className="text-gray-700 transition hover:text-gray-700/75" href="#"> Blog </a>
       </li>
+      <li>
+            <Link
+              to="/restro-login"
+              className="text-gray-700 transition hover:text-gray-700/75"
+            >
+              Restro Login
+            </Link>
+          </li>
     </ul>
 
     <ul className="mt-12 flex justify-center gap-6 md:gap-8">
@@ -95,6 +103,7 @@ function Footer() {
           </svg>
         </a>
       </li>
+    
 
       <li>
         <a

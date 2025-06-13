@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { UseOrderStatus } from '../hooks/Useorderstatus';
-import { CheckCircle } from 'lucide-react';
+import API_URL from '../Utility/constant';
 function Profile() {
   const user = useSelector((state) => state.user);
   const userId = useSelector((state) => state.user.id);
@@ -15,8 +14,19 @@ function Profile() {
 
   useEffect(() => {
     const getOrder = async () => {
-      const res = await UseOrderStatus(userId);
-      setOrder(res);
+       const response = await fetch(`${API_URL}/restro/showpreviousorder`, {
+        method: 'POST',
+        credentials: "include",
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Credentials': true,
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ userID: userId }),
+      });
+  
+      const data = await response.json();
+      setOrder(data);
     };
     getOrder();
   }, [userId]);

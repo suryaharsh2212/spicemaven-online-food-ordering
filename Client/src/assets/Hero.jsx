@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
-import Grid from './Grid';
 import Section_second from './Section_second';
-import DeliveryIcon from "./DeliveryIcon";
 import LoginModal from "./LoginModal";
 import RegisterModal from "./RegisterModal";
 
@@ -12,10 +10,6 @@ export const Hero = () => {
     visible: { y: 0, opacity: 1 },
   };
 
-  const variantsSecond = {
-    hidden: { x: 100, opacity: 0 },
-    visible: { x: 0, opacity: 1 },
-  };
 
   return (
     <div style={{ fontFamily: "philobold" }}>
@@ -24,7 +18,7 @@ export const Hero = () => {
           <img
             className=" object-cover w-full h-full bg-orange-500 brightness-90"
             src="https://cdn.pixabay.com/photo/2016/11/18/14/05/brick-wall-1834784_1280.jpg"
-            // src="https://cdn.pixabay.com/photo/2017/06/06/22/37/italian-cuisine-2378729_640.jpg" 
+            // src="https://images.pexels.com/photos/616401/pexels-photo-616401.jpeg?auto=compress&cs=tinysrgb&w=600" 
             // src="https://res.cloudinary.com/dllgqcla4/image/upload/v1749050183/ChatGPT_Image_Jun_4_2025_08_46_01_PM_gbstj5.png"
             alt="Restaurant background"
           />
