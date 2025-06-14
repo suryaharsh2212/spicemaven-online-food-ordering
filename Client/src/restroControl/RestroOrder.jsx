@@ -78,6 +78,8 @@ function RestroOrder() {
         console.error('Ably publish error:', err);
       } else {
         console.log('Status updated:', newStatus);
+        localStorage.setItem('acceptingOrders', newStatus);
+
       }
     });
   };
@@ -160,7 +162,19 @@ function RestroOrder() {
 
                     <div className="text-sm text-gray-700 font-medium">Qty: {item.quantity}</div>
                   </div>
+
                 ))}
+                <div className="bg-white  rounded-xl p-4 border border-gray-200">
+                  <div className="flex flex-col space-y-1">
+                    <span className="text-sm font-medium text-gray-700">
+                      Total: <span className="text-green-600 font-semibold">₹{order.totalAmount}</span>
+                    </span>
+                    <p className="text-sm text-gray-600">
+                      <span className="font-medium">Address:</span> {order.address}
+                    </p>
+                  </div>
+                </div>
+
               </div>
             </motion.div>
           ))}

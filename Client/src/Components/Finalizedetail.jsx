@@ -8,62 +8,69 @@ import RazorpayButton from './Payment';
 function Finalizedetail() {
     const cart = useSelector((state) => state.cart.items);
     const userDetails = useSelector((state) => state.user.id);
-    const total=useSelector((state) => state.user.totalprice);
+    const total = useSelector((state) => state.user.totalprice);
     const [addresses, setAddresses] = React.useState([]);
     const [spinner, setSpinner] = useState(false)
     const [locater, setLocater] = useState(false)
     const [lat, setLat] = React.useState('');
     const [long, setLong] = React.useState('');
+    const [selectedAddress, setSelectedAddress] = useState('');
     const dispatch = useDispatch();
-    const[paymentStartController ,setpaymentStartController ]=useState(false);
+    const [paymentStartController, setpaymentStartController] = useState(false);
+    const handleSelectChange = (e) => {
+        setSelectedAddress(e.target.value);
+      
+    };
 
-const GenerateOrder = async () => {
-  setSpinner(true);
+    const GenerateOrder = async () => {
+        setSpinner(true);
 
-  const orderObject = {
-    userID: userDetails,
-    orderDetails: cart.map(item => ({
-      dishId: item._id,
-      quantity: item.quantity,
-    })),
-  };
+        const orderObject = {
+            userID: userDetails,
+            address: selectedAddress,
+            totalAmount: total,
+            orderDetails: cart.map(item => ({
+                dishId: item._id,
+                quantity: item.quantity,
+            })),
+        };
 
-  try {
-    const response = await UseGenerateOrder(orderObject);
-    console.log("Response from order generation:", response);
-    console.log(response?.existingOrder?.status);
+        try {
+            const response = await UseGenerateOrder(orderObject);
 
+            if (response.slag && response?.existingOrder?.status === 'preparing' || response?.existingOrder?.status === 'packed' || response?.existingOrder?.status === 'outForDelivery') {
+                toast.error(" You already have a pending order. Please wait until it is completed.", {
+                    position: "top-center",
+                    autoClose: 3000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    theme: "colored",
+                    transition: Bounce,
+                });
+                setSpinner(false);
+                return;
+            }
 
-    if ( response.slag && response?.existingOrder?.status === 'preparing' || response?.existingOrder?.status === 'packed' || response?.existingOrder?.status === 'outForDelivery') {
-      toast.error(" You already have a pending order. Please wait until it is completed.", {
-        position: "top-center",
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        theme: "colored",
-        transition: Bounce, 
-      });
-      setSpinner(false);
-      return; 
-    }
+            console.log("Order generated successfully:", response);
+            localStorage.setItem("orderId", response?.order?._id);
+            console.log("Order ID stored in localStorage:", response?.order?._id);
+            if(response?.order?._id){
+                setpaymentStartController(false);
+            }
 
-    console.log("Order generated successfully:", response);
-    localStorage.setItem("orderId", response?.order?._id);
-    console.log("Order ID stored in localStorage:", response?.order?._id);
+            setpaymentStartController(true);
 
-    setpaymentStartController(true);
+            dispatch(clearCart());
 
-    dispatch(clearCart());
+        } catch (error) {
+            console.error("Error during order generation:", error);
+            toast.error("Something went wrong while placing your order.");
+        }
 
-  } catch (error) {
-    console.error("Error during order generation:", error);
-    toast.error("Something went wrong while placing your order.");
-  }
-
-  setSpinner(false);
-};
+        setSpinner(false);
+    };
 
 
     navigator.geolocation.getCurrentPosition((position) => {
@@ -120,22 +127,16 @@ const GenerateOrder = async () => {
                 <div className="container mx-auto px-4 py-6 lg:px-8">
                     {locater ? <><span className="loader "></span> <span>Locating you.....</span></> : <></>}
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-
                         <div className="col-span-2 bg-gray-200 h-64 md:h-full lg:h-auto">
-
                             <Map />
                         </div>
                         <div className=" p-4 h-full">
                             <div className="rounded-lg bg-white p-8 shadow-lg lg:col-span-1 lg:p-12">
                                 <div className="space-y-4">
-                                    {/* <div className="bg-gray-600 px-4 py-3 text-white">
-                                    <p className="text-center text-sm font-medium">
-                                        Confirm your Address
-                                    </p>
-                                </div> */}
-
+                                    <h2 className="text-2xl font-bold text-gray-800">Confirm Your Order</h2>
+                                    <p className="text-gray-600">Please confirm your address and provide any delivery instructions.</p>
                                     <div className="w-full border rounded-lg border-gray">
-                                        <select className="select border-gray w-full max-w-full">
+                                        <select value={selectedAddress} onChange={handleSelectChange} className="select border-gray w-full max-w-full">
                                             <option disabled selected>
                                                 Confirm your address
                                             </option>
@@ -179,19 +180,19 @@ const GenerateOrder = async () => {
                     </div>
                 </div>
             }
-             <ToastContainer
-                    position="bottom-right"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                    theme="colored"
-                    transition={Flip}
-                  />
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="colored"
+                transition={Flip}
+            />
         </div>
     );
 
