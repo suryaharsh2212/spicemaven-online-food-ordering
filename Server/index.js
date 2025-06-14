@@ -13,7 +13,7 @@ ConnectToMongo()
 
 app.use(cors({ 
     origin: [
-        'https://spicemaven-online-food-ordering.vercel.app', // Allow your frontend origin
+        'https://spicemaven.vercel.app', // Allow your frontend origin
         'http://localhost:5173' // For local development
     ],
     credentials: true, // Allow credentials (cookies, authorization headers, etc.)
@@ -24,7 +24,7 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json({limit:"20kb"}))
 app.use("/restro",router)
 app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'https://spicemaven-online-food-ordering.vercel.app')
+    res.setHeader('Access-Control-Allow-Origin', 'https://spicemaven.vercel.app')
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type,Authorization,')
     res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     res.setHeader('Access-Control-Allow-Credentials', 'true')
