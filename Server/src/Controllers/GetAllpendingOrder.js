@@ -9,7 +9,7 @@ export const getTodayOrdersForRestro = async (req, res) => {
     const endOfDay = new Date();
     endOfDay.setHours(23, 59, 59, 999);
 
-    console.log("Fetching today's non-delivered orders between:", startOfDay, "and", endOfDay);
+   
    
     const todayOrders = await Order.find({
       createdAt: {

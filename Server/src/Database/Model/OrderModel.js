@@ -19,6 +19,10 @@ const OrderSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  slag: {
+    type: Boolean,
+    default: false
+  },
   razorpay_order_id: {
     type: String,
     required: false

@@ -8,17 +8,18 @@ export const createOrder = async (req, res) => {
       return res.status(400).json({ message: 'User ID and order details are required' });
     }
 
-   const existingOrder = await Order.findOne({ 
-  userID, 
-  status: { $nin: ['delivered'] } 
-});
+    const existingOrder = await Order.findOne({
+      userID,
+      status: { $nin: ['delivered'] },
+      slag: false
+    });
 
 
     if (existingOrder) {
       return res.status(400).json({
         message: 'You already have a pending order. Please complete it before placing a new one.',
         existingOrder,
-        flag: 'pending'
+        slag: existingOrder.slag
       });
     }
 

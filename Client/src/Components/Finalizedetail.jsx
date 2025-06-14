@@ -31,8 +31,10 @@ const GenerateOrder = async () => {
   try {
     const response = await UseGenerateOrder(orderObject);
     console.log("Response from order generation:", response);
+    console.log(response?.existingOrder?.status);
 
-    if ( response?.flag === 'pending' ) {
+
+    if ( response.slag && response?.existingOrder?.status === 'preparing' || response?.existingOrder?.status === 'packed' || response?.existingOrder?.status === 'outForDelivery') {
       toast.error(" You already have a pending order. Please wait until it is completed.", {
         position: "top-center",
         autoClose: 3000,
@@ -48,7 +50,11 @@ const GenerateOrder = async () => {
     }
 
     console.log("Order generated successfully:", response);
+    localStorage.setItem("orderId", response?.order?._id);
+    console.log("Order ID stored in localStorage:", response?.order?._id);
+
     setpaymentStartController(true);
+
     dispatch(clearCart());
 
   } catch (error) {

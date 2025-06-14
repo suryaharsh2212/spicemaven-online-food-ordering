@@ -3,7 +3,7 @@ import { Dish } from "../Database/Model/DishModel.js";
 export const getItemsBysearch = async (req, res) => {
   try {
     const { name } = req.body; 
-    console.log(name);
+    
 
     const dishes = await Dish.find({
       name: { $regex: new RegExp(name, 'i') }

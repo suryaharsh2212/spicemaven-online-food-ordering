@@ -12,6 +12,8 @@ import createPaymentOrder from "../paymentSetup/createPaymentOrder.js";
 import { updateOrderStatus } from "../Controllers/updateStatus.js";
 import { getTodayOrdersForRestro } from "../Controllers/GetAllpendingOrder.js"
 import { getAllprevOrder } from "../Controllers/GetAlluserprevOrder.js";
+import { confirmDelivery } from "../Controllers/confirmDelivery.js";
+import { confirmRazorpayPayment } from "../paymentSetup/confirmpayment.js";
 const router=Router();
 
 router.route("/register").post(registerUser)
@@ -23,6 +25,8 @@ router.route("/showpreviousorder").post(authMiddleware,getAllprevOrder)
 router.route("/getmenu").post(authMiddleware,getItems)
 router.route("/search").post(authMiddleware,getItemsBysearch)
 router.route("/createorder").post(authMiddleware,createPaymentOrder)
+router.route("/confirm-delivery").post(authMiddleware, confirmDelivery);
+router.route('/confirm-razorpayment').post( confirmRazorpayPayment);
 
 router.patch('/order/status', updateOrderStatus);
 router.get('/order/today', getTodayOrdersForRestro);

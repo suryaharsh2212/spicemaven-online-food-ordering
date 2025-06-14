@@ -14,7 +14,7 @@ function Profile() {
 
   useEffect(() => {
     const getOrder = async () => {
-       const response = await fetch(`${API_URL}/restro/showpreviousorder`, {
+      const response = await fetch(`${API_URL}/restro/showpreviousorder`, {
         method: 'POST',
         credentials: "include",
         headers: {
@@ -24,13 +24,13 @@ function Profile() {
         },
         body: JSON.stringify({ userID: userId }),
       });
-  
+
       const data = await response.json();
       setOrder(data);
     };
     getOrder();
   }, [userId]);
-  
+
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start bg-gray-100 px-4 py-10">
@@ -62,7 +62,7 @@ function Profile() {
             <h3 className="text-lg font-semibold text-gray-700">Phone Number</h3>
             <p className="text-gray-600">{user.phoneNo}</p>
           </div>
-          
+
         </div>
 
         <div className="mt-10">
@@ -84,7 +84,7 @@ function Profile() {
                     <ul className="list-disc list-inside space-y-1">
                       {orderItem.details.map((detail) => (
                         <li key={detail._id} className="text-sm text-gray-700">
-                          🍽️ {detail.dish.name} - Qty: {detail.quantity}
+                          {detail.dish.name} - Qty: {detail.quantity}
                         </li>
                       ))}
                     </ul>

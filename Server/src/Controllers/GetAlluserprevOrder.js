@@ -9,7 +9,7 @@ export const getAllprevOrder = async (req, res) => {
       return res.status(400).json({ message: 'User ID is required' });
     }
 
-    const orders = await Order.find({ userID }).sort({ createdAt: -1 });
+    const orders = await Order.find({ userID, status: { $in: ['delivered', 'cancelled'] } }).sort({ createdAt: -1 });
 
     if (!orders.length) {
       return res.status(404).json({ message: 'No orders found for this user.' });

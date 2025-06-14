@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import API_URL from '../Utility/constant';
-import { RefreshCw } from 'lucide-react';
-
+import { RefreshCw, PackageX } from 'lucide-react';
+import Ably from 'ably';
 
 function RestroOrder() {
   const [orders, setOrders] = useState([]);
@@ -10,20 +10,26 @@ function RestroOrder() {
   const [newStatus, setNewStatus] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [acceptingOrders, setAcceptingOrders] = useState(true);
+
+
+  const ably = new Ably.Realtime({ key: 'D3oMJQ.KLXXSg:fF4sPNms7-Fusun_3tsOPg0K1LWPryvPoL9dahM15qA' });
+  const channel = ably.channels.get('restaurant-status');
 
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/restro/order/today`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+      const response = await fetch(`${API_URL}/restro/order/today`);
       const data = await response.json();
-      setOrders(data);
+      if (Array.isArray(data)) {
+        setOrders(data);
+      } else {
+        setOrders([]);
+        console.warn('Unexpected response:', data);
+      }
     } catch (err) {
-      console.error('Error fetching orders:', err);
+      console.error('Fetch failed:', err);
+      setOrders([]);
     } finally {
       setLoading(false);
     }
@@ -48,43 +54,69 @@ function RestroOrder() {
 
       const data = await response.json();
 
-      if (data.error) {
-        alert(data.message);
-      } else {
+      if (!data.error) {
         setOrders(prev =>
           prev.map(order =>
             order._id === selectedOrder._id ? { ...order, status: newStatus } : order
           )
         );
         setModalOpen(false);
+      } else {
+        alert(data.message);
       }
     } catch (err) {
       console.error('Error updating order status:', err);
     }
   };
 
+  const toggleRestaurantStatus = () => {
+    const newStatus = !acceptingOrders;
+    setAcceptingOrders(newStatus);
+
+    channel.publish('status-change', { acceptingOrders: newStatus }, (err) => {
+      if (err) {
+        console.error('Ably publish error:', err);
+      } else {
+        console.log('Status updated:', newStatus);
+      }
+    });
+  };
+
   return (
     <div className="p-4 min-h-screen bg-gray-100 relative">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6 px-4">
-        <h2 className="text-2xl font-bold text-center md:text-left"> Today's Orders</h2>
-        <button
-          onClick={fetchOrders}
-          disabled={loading}
-          className={`mt-3 md:mt-0 flex items-center gap-2 text-sm px-4 z-40 py-2 rounded shadow transition ${loading ? 'bg-gray-300 cursor-not-allowed text-gray-700' : 'bg-orange-500 text-white hover:bg-orange-600'
-            }`}
-        >
-          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-          <span>{loading ? 'Refreshing...' : 'Refresh'}</span>
-        </button>
+        <h2 className="text-2xl font-bold text-center md:text-left">Today's Orders</h2>
+
+        <div className="flex items-center gap-3 mt-3 md:mt-0">
+          <button
+            onClick={toggleRestaurantStatus}
+            className={`px-4 py-2 rounded text-white font-semibold transition ${acceptingOrders ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'}`}
+          >
+            {acceptingOrders ? ' Accepting Orders' : ' Not Accepting Orders'}
+          </button>
+
+          <button
+            onClick={fetchOrders}
+            disabled={loading}
+            className={`flex items-center gap-2 text-sm px-4 py-2 rounded shadow transition ${loading ? 'bg-gray-300 cursor-not-allowed text-gray-700' : 'bg-orange-500 text-white hover:bg-orange-600'}`}
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            <span>{loading ? 'Refresh...' : 'Refresh'}</span>
+          </button>
+        </div>
       </div>
 
-
-
-      {orders?.length === 0 ? (
-        <p className="text-center text-gray-600">No orders placed today.</p>
+      {!orders.length ? (
+        <div className="flex flex-col items-center justify-center py-16 text-center text-gray-600">
+          <div className="bg-orange-100 p-6 rounded-full shadow-sm mb-4">
+            <PackageX className="w-12 h-12 text-orange-500" />
+          </div>
+          <h3 className="text-xl font-semibold text-gray-700 mb-1">No Orders Yet</h3>
+          <p className="text-sm text-gray-500">Looks like there are no orders placed today. Please check back later or refresh the page.</p>
+        </div>
       ) : (
         <div className="grid gap-4 md:grid-cols-2">
-          {orders?.map(order => (
+          {orders.map(order => (
             <motion.div
               key={order._id}
               initial={{ opacity: 0, y: 20 }}
@@ -108,7 +140,7 @@ function RestroOrder() {
               </div>
 
               <div className="border-t pt-2 space-y-3">
-                {order?.details.map((item) => (
+                {order.details.map(item => (
                   <div key={item._id} className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <img
@@ -119,20 +151,14 @@ function RestroOrder() {
                       <div>
                         <h4 className="font-semibold text-gray-800 text-sm">{item.dish.name}</h4>
                         <p className="text-xs text-gray-500">{item.dish.section}</p>
-                        <span
-                          className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-medium ${item.dish.vegetarian === "true"
-                            ? 'bg-green-100 text-green-700'
-                            : 'bg-red-100 text-red-700'
-                            }`}
-                        >
+                        <span className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-medium ${item.dish.vegetarian === "true"
+                          ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
                           {item.dish.vegetarian === "true" ? 'Vegetarian' : 'Non-Vegetarian'}
                         </span>
                       </div>
                     </div>
 
-                    <div className="text-sm text-gray-700 font-medium">
-                      Qty: {item.quantity}
-                    </div>
+                    <div className="text-sm text-gray-700 font-medium">Qty: {item.quantity}</div>
                   </div>
                 ))}
               </div>
@@ -209,3 +235,5 @@ function RestroOrder() {
 }
 
 export default RestroOrder;
+
+
