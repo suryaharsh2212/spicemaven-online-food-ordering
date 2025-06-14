@@ -47,7 +47,7 @@ function Cart() {
     channel.unsubscribe();
     ably.close();
   };
-}, []);
+}, [status]);
 
 
   useEffect(() => {
