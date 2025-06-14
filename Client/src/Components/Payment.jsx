@@ -53,7 +53,7 @@ const RazorpayButton = ({ amount }) => {
                 'Access-Control-Allow-Credentials': true,
                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },
-            body: JSON.stringify({ amount: parseInt(amount) })
+            body: JSON.stringify({ amount: parseInt(amount*100) })
         });
 
         const orderData = await orderRes.json();
@@ -69,11 +69,36 @@ const RazorpayButton = ({ amount }) => {
             description: "Order Payment",
             image: "https://example.com/spice-maven-logo.png",
             order_id: orderData.id,
-            handler: function (response) {
-                setShowConfirmation(true)
-                setTimeout(() => {
-                    navigate(`/user/restro/${userDetails}/confirmOrder`);
-                }, 2000);
+            handler: async function (response) {
+                console.log("Payment successful", response);
+
+                const confirmRes = await fetch(`${API_URL}/restro/confirm-razorpayment`, {
+                    method: "POST",
+                    credentials: "include",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Credentials': true,
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    },
+                    body: JSON.stringify({
+                        paymentId: response.razorpay_payment_id,
+                        orderId: localStorage.getItem("orderId"),
+                    })
+                });
+
+                const confirmData = await confirmRes.json();
+                if (confirmData.success) {
+                    console.log("Payment confirmed and order updated:", confirmData);
+                    setShowConfirmation(true);
+                    setTimeout(() => {
+                        navigate(`/user/restro/${userDetails}/confirmOrder`);
+                    }, 2000);
+                } else {
+                    console.error("Failed to confirm payment:", confirmData);
+                    alert("Failed to confirm payment. Please try again.");
+                }
+
+
 
 
             },

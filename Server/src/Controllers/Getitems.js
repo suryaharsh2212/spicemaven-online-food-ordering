@@ -4,10 +4,7 @@ export const getItems = async (req, res) => {
   try {
     const type = req.body;
      
-
     const dishes = await Dish.find({section:type.type});
-
- 
 
     res.status(200).json({
       message: 'Items retrieved successfully',

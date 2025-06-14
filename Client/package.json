@@ -13,6 +13,7 @@
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
     "@reduxjs/toolkit": "^2.2.7",
+    "ably": "^2.9.0",
     "axios": "^1.7.3",
     "daisyui": "^4.12.10",
     "framer-motion": "^11.3.30",

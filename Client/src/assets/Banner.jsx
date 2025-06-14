@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AlertTriangle, X } from 'lucide-react';
 
-function TestModeBanner() {
+function TestModeBanner({ msg }) {
   const [visible, setVisible] = useState(true);
 
   if (!visible) return null;
@@ -13,7 +13,8 @@ function TestModeBanner() {
         <strong className="font-semibold text-sm sm:text-base">Test Mode:</strong>
       </div>
       <div className="text-sm sm:text-base leading-snug sm:leading-normal">
-        This website is running in test mode. Payments are simulated and no real transactions will occur. Orders may appear to be created, but they will not be processed or delivered.
+        This website is running in test mode. Payments are simulated and no real transactions will occur. 
+        <span className="font-semibold"> {msg}</span>
       </div>
       <button
         className="absolute top-2 right-2 text-yellow-700 hover:text-yellow-900"

@@ -11,8 +11,9 @@ export const getOrdersByUser = async (req, res) => {
 
     const order = await Order.findOne({ 
       userID, 
-      status: { $in: ['preparing', 'packed', 'out for delivery'] } 
-    });
+      status: { $in: ['preparing', 'packed', 'outForDelivery','delivered'] }, 
+      slag: false
+    }).sort({ createdAt: -1 });
 
     if (!order) {
       return res.status(404).json({ message: 'No active orders found for this user' });

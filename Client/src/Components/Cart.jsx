@@ -5,6 +5,7 @@ import { ToastContainer, toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css'
 import { useNavigate } from 'react-router-dom';
 import { setPrice } from '../redux/slice';
+import Ably from 'ably';
 function Cart() {
   const dispatch=useDispatch();
   const items = useSelector((state) => state.cart.items);
@@ -13,6 +14,42 @@ function Cart() {
   const [discount, setDiscount] = useState('');
   const [finalPrice, setFinalPrice] = useState(0);
   const navigate=useNavigate()
+  const [status, setStatus] = useState(true);
+  useEffect(() => {
+  const ably = new Ably.Realtime({ key: 'D3oMJQ.KLXXSg:fF4sPNms7-Fusun_3tsOPg0K1LWPryvPoL9dahM15qA' });
+  const channel = ably.channels.get('restaurant-status');
+  const toastId = 'restaurant-status-toast';
+
+  channel.subscribe('status-change', (message) => {
+    const { acceptingOrders } = message.data;
+    setStatus(acceptingOrders);
+
+    if (!toast.isActive(toastId)) {
+      toast.success(
+        `Restaurant is now ${acceptingOrders ? 'accepting' : 'not accepting'} orders.`,
+        {
+          containerId: 'restaurantStatus',  
+          toastId: toastId,
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          theme: "dark",
+          transition: Bounce
+        }
+      );
+    }
+  });
+
+  return () => {
+    channel.unsubscribe();
+    ably.close();
+  };
+}, []);
+
+
   useEffect(() => {
     const calculatedTotal = items.reduce((accumulator, item) => {
       const price = Number(item.price) || 0;
@@ -111,7 +148,7 @@ function Cart() {
                 <span>Total cost</span>
                 <span>₹{finalPrice.toFixed(2)}</span>
               </div>
-              <button onClick={GotoMaps} className="bg-orange-500 font-semibold hover:bg-orange-600 py-3 text-sm text-white uppercase w-full">
+              <button disabled={!status} onClick={GotoMaps} className="bg-orange-500 font-semibold hover:bg-orange-600 py-3 text-sm text-white uppercase w-full">
                 Proceed
               </button>
             </div>

@@ -76,9 +76,9 @@ function Order_confo() {
         </button>
       </div>
 
-      {Array.isArray(order) && order.length === 0 ? (
-        <div className="text-center h-full text-gray-600 text-lg font-medium mt-10">
-          {apiMessage || "No orders from your side."}
+      {Array.isArray(order) && order.length === 0 && !order.slag ? (
+        <div className="text-center h-96 flex justify-center items-center border rounded-lg border-orange-600 text-gray-600 text-lg font-medium mt-10">
+          {  "OOps !!!! No orders from your side."}
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4">
@@ -86,7 +86,6 @@ function Order_confo() {
             <div key={orderItem._id} className="w-full mb-4">
               <article className="rounded-xl bg-white p-4 ring ring-indigo-50 sm:p-6 lg:p-8">
                 <div className="flex flex-col lg:flex-row gap-6">
-                  {/* Left Side */}
                   <div className="w-full lg:basis-3/5">
                     <strong className="rounded border border-indigo-500 bg-indigo-500 px-3 py-1.5 text-[10px] font-medium text-white">
                       Status: {orderItem.status}
@@ -125,7 +124,7 @@ function Order_confo() {
 
                   {/* Right Side: Timeline */}
                   <div className="w-full md:flex md:justify-center md:items-center lg:basis-2/5">
-                    <OrderTimeline currentStatus={orderItem.status} />
+                    <OrderTimeline currentStatus={orderItem.status} slag={orderItem.slag}  />
                   </div>
                 </div>
               </article>
