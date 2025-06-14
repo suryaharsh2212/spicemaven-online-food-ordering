@@ -7,6 +7,13 @@ const OrderSchema = new mongoose.Schema({
     ref: 'spiceUser',
     required: true
   },
+  address: {
+    type: String,
+  },
+  totalAmount: {
+    type: String,
+    default: '0'
+  },
   date: {
     type: Date,
     default: Date.now

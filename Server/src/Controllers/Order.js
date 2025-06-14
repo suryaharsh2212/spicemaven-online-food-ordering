@@ -3,10 +3,12 @@ import { OrderDetail } from '../Database/Model/Orderdetail.js';
 
 export const createOrder = async (req, res) => {
   try {
-    const { userID, orderDetails } = req.body;
+    const { userID, address, totalAmount, orderDetails } = req.body;
     if (!userID || !orderDetails || !Array.isArray(orderDetails) || orderDetails.length === 0) {
       return res.status(400).json({ message: 'User ID and order details are required' });
     }
+  console.log(req.body);
+  
 
     const existingOrder = await Order.findOne({
       userID,
@@ -23,7 +25,7 @@ export const createOrder = async (req, res) => {
       });
     }
 
-    const newOrder = new Order({ userID });
+    const newOrder = new Order({ userID, address, totalAmount });
     const savedOrder = await newOrder.save();
 
     const orderDetailsPromises = orderDetails.map(detail => {
