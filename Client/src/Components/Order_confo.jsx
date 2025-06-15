@@ -13,6 +13,7 @@ function Order_confo() {
   const [apiMessage, setApiMessage] = useState('');
   const navigate = useNavigate();
 
+
   const fetchOrder = useCallback(async () => {
     setLoading(true);
     try {
@@ -39,6 +40,9 @@ function Order_confo() {
   }, [fetchOrder]);
 
   const backtoMenu = () => {
+    navigate(`/user/restro/${userId}`);
+  };
+  const moveTomenu = () => {
     navigate(`/user/restro/${userId}`);
   };
 
@@ -77,8 +81,43 @@ function Order_confo() {
       </div>
 
       {Array.isArray(order) && order.length === 0 && !order.slag ? (
-        <div className="text-center h-96 flex justify-center items-center border rounded-lg border-orange-600 text-gray-600 text-lg font-medium mt-10">
-          {  "OOps !!!! No orders from your side."}
+        <div className="flex flex-col items-center justify-center p-8 rounded-2xl bg-gradient-to-br  to-white border   mx-auto mt-10 transition-all duration-300  w-full">
+          <div className="relative mb-6">
+            <div className="absolute inset-0 bg-orange-100 rounded-full blur-sm animate-pulse"></div>
+            <div className="relative bg-white p-5 rounded-full border-4 border-orange-100">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="64"
+                height="64"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-orange-400"
+              >
+                <path d="m7.5 4.27 9 5.15" /><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" />
+                <path d="m3.3 7 8.7 5 8.7-5" /><path d="M12 22V12" />
+              </svg>
+
+            </div>
+          </div>
+
+          <h3 className="text-2xl font-bold text-gray-800 mb-2 text-center">No Orders Yet</h3>
+          <p className="text-gray-500 text-center mb-6 max-w-md">
+            It looks like you haven't placed any orders. Ready to start Ordering?
+          </p>
+          <button onClick={moveTomenu} className="bg-white hover:bg-orange-50 border border-orange-500 text-orange-500 font-semibold px-6 py-2 rounded-2xl shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center">
+            <span className="text-lg"> Go to Menu</span>
+          </button>
+
+
+          {/* <div className="flex space-x-3">
+            <div className="h-2 w-2 rounded-full bg-orange-200 animate-bounce"></div>
+            <div className="h-2 w-2 rounded-full bg-orange-100 animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+            <div className="h-2 w-2 rounded-full bg-orange-100 animate-bounce" style={{ animationDelay: '0.4s' }}></div>
+          </div> */}
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-4">
@@ -124,7 +163,7 @@ function Order_confo() {
 
                   {/* Right Side: Timeline */}
                   <div className="w-full md:flex md:justify-center md:items-center lg:basis-2/5">
-                    <OrderTimeline currentStatus={orderItem.status} slag={orderItem.slag}  />
+                    <OrderTimeline currentStatus={orderItem.status} slag={orderItem.slag} />
                   </div>
                 </div>
               </article>

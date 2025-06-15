@@ -1,29 +1,34 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import MenuCard from './MenuCard';
 import SideBar from './SideBar';
 import { addItem } from '../redux/cartslice';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logout } from '../redux/slice';
 import { ToastContainer, toast, Flip, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import { UseGetItem } from '../hooks/useGetItem';
 import { UseSearch } from '../hooks/UseSearch';
+import { Search } from 'lucide-react';
 
 function Menu() {
   const navigate = useNavigate();
   const [type, setType] = useState('Starters');
   const [dishes, setDishes] = useState([]);
-  const token=localStorage.getItem('token');
+  const [search, setSearch] = useState('');
   const dispatch = useDispatch();
-  const [search, setSearch] = useState('')
+  const token = localStorage.getItem('token');
+
+  const debounceRef = useRef(null);
+  const lastErrorSearch = useRef('');
+
   useEffect(() => {
     if (!token) {
-      navigate("/");
-      alert("session expired");
+      navigate('/');
+      alert('Session expired');
       dispatch(logout());
     }
-  }, [ navigate, dispatch]);
+  }, [navigate, dispatch]);
 
   useEffect(() => {
     const callitem = async () => {
@@ -44,15 +49,14 @@ function Menu() {
   }, [type]);
 
   const handleAddToCart = (item) => {
-    toast.warn(`${item.name} added to cart `, {
-      position: "bottom-right",
+    toast.warn(`${item.name} added to cart`, {
+      position: 'bottom-right',
       autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
       draggable: true,
-      progress: undefined,
-      theme: "colored",
+      theme: 'colored',
       transition: Flip,
     });
     dispatch(addItem(item));
@@ -60,36 +64,37 @@ function Menu() {
 
   const SelectType = (val) => {
     setType(val);
-  }
+  };
+
   const finditembysearch = async () => {
     try {
       const res = await UseSearch(search);
       if (res.error) {
-        toast.error(`${search} Item not Available...`, {
-          position: "top-center",
-          autoClose: 3000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "colored",
-          
-          transition: Bounce,
-        });
+        if (lastErrorSearch.current !== search) {
+          lastErrorSearch.current = search;
+          toast.error(`${search} Item not Available...`, {
+            position: 'top-center',
+            autoClose: 2000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            theme: 'colored',
+            transition: Bounce,
+          });
+        }
+        return;
       }
+
       if (res && res.data) {
         const searchResults = res.data;
-
         setDishes((prevDishes) => {
-          const combinedDishes = [...searchResults, ...prevDishes];
-
-          const uniqueDishes = combinedDishes.filter(
+          const combined = [...searchResults, ...prevDishes];
+          const unique = combined.filter(
             (dish, index, self) =>
               index === self.findIndex((d) => d.name === dish.name)
           );
-
-          return uniqueDishes;
+          return unique;
         });
       }
     } catch (error) {
@@ -97,73 +102,89 @@ function Menu() {
     }
   };
 
+  useEffect(() => {
+    if (search.trim()) {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
 
+      debounceRef.current = setTimeout(() => {
+        finditembysearch();
+      }, 500);
+    }
+    return () => clearTimeout(debounceRef.current);
+  }, [search]);
 
   return (
     <div>
-  <div className='md:mr-5 md:ml-72 -mt-3 md:-mt-1 flex justify-center items-center'>
-    <div className="relative w-full mt-3 p-3 md:p-5">
-      <label htmlFor="Search" className="sr-only">Search</label>
-
-      <input
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        id="Search"
-        placeholder="Search for..."
-        className="w-full rounded-full border-gray-300 py-2.5 pl-10 pr-12 h-14 bg-gray-100 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 sm:text-sm"
-      />
-
-      <span className="absolute inset-y-0 right-0 flex items-center pr-3 mr-10">
-        <button onClick={finditembysearch} className="text-gray-600 hover:text-gray-700">
-          <span className="sr-only">Search</span>
-          <img className='h-5 w-5' src="https://cdn-icons-png.flaticon.com/128/3917/3917132.png" alt="Search Icon" />
-        </button>
-      </span>
-    </div>
-  </div>
-
-  <div className="grid grid-cols-1 gap-4 lg:grid-cols-6 lg:gap-8">
-    <div className="h-fit md:mt-5 w-full flex-1 rounded-lg bg-gray-50">
-      <SideBar onSelectType={(val) => SelectType(val)} />
-    </div>
-    <div className="relative rounded-lg bg-gray-50 lg:col-span-5 overflow-y-auto p-4">
-      <div className="grid h-screen grid-cols-1 md:grid-cols-4 scrollbar-hidden md:p-5 overflow-y-scroll lg:grid-cols-4">
-        {dishes.length > 0 ? (
-          dishes.map((ele, index) => (
-            <MenuCard
-              key={index}
-              link={ele.image}
-              name={ele.name}
-              price={ele.price}
-              description={ele.description}
-              onAddToCart={() => handleAddToCart(ele)}
+      {/* Search bar */}
+      <div className="md:mr-5 md:ml-72 -mt-3 md:-mt-1 flex justify-center items-center">
+        <div className="relative w-full mt-3 p-3 md:p-5">
+          <label htmlFor="Search" className="sr-only">Search</label>
+          <div className="relative w-full max-w-md">
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              id="Search"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  finditembysearch();
+                }
+              }}
+              placeholder="Search..."
+              className="w-full h-10 pl-10 pr-4 rounded-lg border border-gray-300 bg-white text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-orange-400 transition duration-200"
             />
-          ))
-        ) : (
-          <div className="absolute inset-0 flex justify-center items-center">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-orange-500"></div>
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
           </div>
-        )}
+        </div>
       </div>
+
+      {/* Menu grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-6 gap-0">
+        {/* Sidebar */}
+        <div className="h-full w-full rounded-lg bg-gray-50 px-4 py-6">
+          <SideBar onSelectType={SelectType} />
+        </div>
+
+        {/* Menu cards */}
+        <div className="lg:col-span-5 bg-white p-4 overflow-y-scroll -mt-5 md:-mt-2 h-screen scrollbar-hidden">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {dishes.length > 0 ? (
+              dishes.map((ele, index) => (
+                <MenuCard
+                  key={index}
+                  link={ele.image}
+                  name={ele.name}
+                  price={ele.price}
+                  rating={'4.5'}
+                  category={type}
+                  description={ele.description}
+                  onAddToCart={() => handleAddToCart(ele)}
+                />
+              ))
+            ) : (
+              <div className="col-span-full flex justify-center items-center h-40">
+                <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-orange-500"></div>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Toast container */}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        closeOnClick
+        theme="colored"
+        transition={Flip}
+      />
     </div>
-  </div>
-
-  <ToastContainer
-    position="bottom-right"
-    autoClose={3000}
-    hideProgressBar={false}
-    newestOnTop
-    rtl={false}
-    pauseOnFocusLoss
-    draggable
-    pauseOnHover
-    closeOnClick={true}
-    theme="colored"
-    transition={Flip}
-  />
-</div>
-
   );
 }
 
