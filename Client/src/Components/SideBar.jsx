@@ -1,77 +1,38 @@
 import React from 'react';
+import {
+  UtensilsCrossed,
+  Leaf,
+  Drumstick,
+  Soup,
+  CupSoda
+} from 'lucide-react';
 
 function SideBar({ onSelectType }) {
-    return (
-        <div className='md:bg-white'>
-            <ul className="flex space-x-2 p-3 overflow-x-auto w-full scrollbar-hidden md:block ">
-                <li className="flex-shrink-0 md:ml-2 ">
-                    <button
-                        onClick={() => onSelectType("Starters")}
-                        className="flex items-center gap-3 rounded-lg hover:bg-gray-100 px-4 py-2 text-gray-700 whitespace-nowrap"
-                    >
-                        <img
-                            className='h-5 w-5'
-                            src="https://cdn-icons-png.flaticon.com/128/6349/6349709.png"
-                            alt="Starters"
-                        />
-                        <span className="text-sm font-medium">Starters</span>
-                    </button>
-                </li>
-                <li className="flex-shrink-0">
-                    <button
-                        onClick={() => onSelectType("Veg Gravy")}
-                        className="flex items-center gap-3 rounded-lg hover:bg-gray-100 px-4 py-2 text-gray-700 whitespace-nowrap"
-                    >
-                        <img
-                            className='h-5 w-5'
-                            src="https://cdn-icons-png.flaticon.com/128/5074/5074319.png"
-                            alt="Veg Gravy"
-                        />
-                        <span className="text-sm font-medium">Veg Gravy</span>
-                    </button>
-                </li>
-                <li className="flex-shrink-0">
-                    <button
-                        onClick={() => onSelectType("Non-Veg Gravy")}
-                        className="flex items-center gap-3 rounded-lg hover:bg-gray-100 px-4 py-2 text-gray-700 whitespace-nowrap"
-                    >
-                        <img
-                            className='h-5 w-5'
-                            src="https://cdn-icons-png.flaticon.com/128/10473/10473041.png"
-                            alt="Non-Veg Gravy"
-                        />
-                        <span className="text-sm font-medium">Non-Veg Gravy</span>
-                    </button>
-                </li>
-                <li className="flex-shrink-0">
-                    <button
-                        onClick={() => onSelectType("Chinese")}
-                        className="flex items-center gap-3 rounded-lg hover:bg-gray-100 px-4 py-2 text-gray-700 whitespace-nowrap"
-                    >
-                        <img
-                            className='h-5 w-5'
-                            src="https://cdn-icons-png.flaticon.com/128/10472/10472694.png"
-                            alt="Chinese"
-                        />
-                        <span className="text-sm font-medium">Chinese</span>
-                    </button>
-                </li>
-                <li className="flex-shrink-0">
-                    <button
-                        onClick={() => onSelectType("Drink & Beverages")}
-                        className="flex items-center gap-3 rounded-lg hover:bg-gray-100 px-4 py-2 text-gray-700 whitespace-nowrap"
-                    >
-                        <img
-                            className='h-5 w-5'
-                            src="https://cdn-icons-png.flaticon.com/128/5529/5529097.png"
-                            alt="Drink & Beverages"
-                        />
-                        <span className="text-sm font-medium">Drink & Beverages</span>
-                    </button>
-                </li>
-            </ul>
-        </div>
-    );
+  const menuItems = [
+    { label: "Starters", icon: UtensilsCrossed, color: "text-yellow-600" },
+    { label: "Veg Gravy", icon: Leaf, color: "text-green-600" },
+    { label: "Non-Veg Gravy", icon: Drumstick, color: "text-red-500" },
+    { label: "Chinese", icon: Soup, color: "text-orange-500" },
+    { label: "Drink & Beverages", icon: CupSoda, color: "text-blue-500" },
+  ];
+
+  return (
+    <div className="bg-white md:bg-transparent -mt-5">
+      <ul className="flex overflow-x-auto md:flex-col md:space-y-2 space-x-2 md:space-x-0 px-2 py-2 scrollbar-hidden">
+        {menuItems.map(({ label, icon: Icon, color }) => (
+          <li key={label} className="flex-shrink-0">
+            <button
+              onClick={() => onSelectType(label)}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg hover:bg-gray-100 text-gray-700 whitespace-nowrap transition w-full"
+            >
+              <Icon className={`w-5 h-5 ${color}`} />
+              <span className="text-sm font-medium">{label}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
 export default SideBar;
