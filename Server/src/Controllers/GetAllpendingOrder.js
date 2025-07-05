@@ -10,7 +10,8 @@ export const getTodayOrdersForRestro = async (req, res) => {
     endOfDay.setHours(23, 59, 59, 999);
 
    
-   
+    console.log(req.body);
+    
     const todayOrders = await Order.find({
       createdAt: {
         $gte: startOfDay,

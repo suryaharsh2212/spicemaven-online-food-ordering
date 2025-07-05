@@ -5,6 +5,7 @@ import { UseGenerateOrder } from '../hooks/useGenerateorder';
 import { clearCart } from '../redux/cartslice';
 import { ToastContainer, toast, Flip, Bounce } from 'react-toastify';
 import RazorpayButton from './Payment';
+
 function Finalizedetail() {
     const cart = useSelector((state) => state.cart.items);
     const userDetails = useSelector((state) => state.user.id);
@@ -14,6 +15,7 @@ function Finalizedetail() {
     const [locater, setLocater] = useState(false)
     const [lat, setLat] = React.useState('');
     const [long, setLong] = React.useState('');
+    const [token, setToken] = React.useState('');
     const [selectedAddress, setSelectedAddress] = useState('');
     const dispatch = useDispatch();
     const [paymentStartController, setpaymentStartController] = useState(false);
@@ -49,6 +51,7 @@ function Finalizedetail() {
                     theme: "colored",
                     transition: Bounce,
                 });
+                alert("You already have a pending order. Please wait until it is completed.");
                 setSpinner(false);
                 return;
             }
@@ -56,6 +59,7 @@ function Finalizedetail() {
             console.log("Order generated successfully:", response);
             localStorage.setItem("orderId", response?.order?._id);
             console.log("Order ID stored in localStorage:", response?.order?._id);
+            setToken(response?.order?._id);
             if(response?.order?._id){
                 setpaymentStartController(false);
             }
@@ -119,7 +123,7 @@ function Finalizedetail() {
     return (
         <div className='mt-10 h-screen '>
 
-            {paymentStartController ?
+            {paymentStartController && token ?
                 <div className="flex mt-4 items-center justify-center">
                     <RazorpayButton amount={total} />
                 </div>
