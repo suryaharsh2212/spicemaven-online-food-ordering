@@ -63,7 +63,6 @@ function App() {
       <Outlet />
       <Footer />
 
-      {/* 🔥 Toast container with ID for targeted toasts */}
       <ToastContainer
         containerId="restaurantStatus"
         position="bottom-center"
