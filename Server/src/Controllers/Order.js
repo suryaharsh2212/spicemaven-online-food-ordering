@@ -1,5 +1,6 @@
 import { Order } from '../Database/Model/OrderModel.js';
 import { OrderDetail } from '../Database/Model/Orderdetail.js';
+import { sendOrderConfirmationEmail } from '../Utilities/createMail.js';
 
 export const createOrder = async (req, res) => {
   try {
@@ -7,7 +8,7 @@ export const createOrder = async (req, res) => {
     if (!userID || !orderDetails || !Array.isArray(orderDetails) || orderDetails.length === 0) {
       return res.status(400).json({ message: 'User ID and order details are required' });
     }
-  console.log(req.body);
+
   
 
     const existingOrder = await Order.findOne({
@@ -37,6 +38,13 @@ export const createOrder = async (req, res) => {
     });
 
     await Promise.all(orderDetailsPromises);
+    console.log("User Information:", req.user);
+    await sendOrderConfirmationEmail(
+      req.user.email,
+      savedOrder._id,
+      "Spice Maven Customer",
+      '30-45 minutes'
+    );
 
     return res.status(201).json({
       message: 'Order created successfully',
