@@ -38,13 +38,8 @@ export const createOrder = async (req, res) => {
     });
 
     await Promise.all(orderDetailsPromises);
-    console.log("User Information:", req.user);
-    await sendOrderConfirmationEmail(
-      req.user.email,
-      savedOrder._id,
-      "Spice Maven Customer",
-      '30-45 minutes'
-    );
+  
+    
 
     return res.status(201).json({
       message: 'Order created successfully',

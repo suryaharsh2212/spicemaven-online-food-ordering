@@ -7,6 +7,7 @@ import { CreditCard } from 'lucide-react';
 
 const RazorpayButton = ({ amount }) => {
     const userDetails = useSelector((state) => state.user.id);
+    const user_Info = useSelector((state) => state.user);
     const [showConfirmation, setShowConfirmation] = React.useState(false);
     const navigate = useNavigate()
     const loadRazorpayScript = (src) => {
@@ -58,7 +59,7 @@ const RazorpayButton = ({ amount }) => {
 
         const orderData = await orderRes.json();
         const razorpayKey = import.meta.env.KEY_ID;
-        console.log("Razor key", razorpayKey);
+        
 
 
         const options = {
@@ -83,6 +84,7 @@ const RazorpayButton = ({ amount }) => {
                     body: JSON.stringify({
                         paymentId: response.razorpay_payment_id,
                         orderId: localStorage.getItem("orderId"),
+                        user: user_Info
                     })
                 });
 
